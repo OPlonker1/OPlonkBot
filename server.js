@@ -52,6 +52,8 @@ function CommandHandler(channel, tags, message) {
 }
 
 function MessageHandler(channel, tags, message) {
-    if (message.toLowerCase() === 'modcheck')
+    lowercaseMessage = message.toLowerCase();
+
+    if (lowercaseMessage === 'modcheck' || lowercaseMessage === 'modcheck?' || lowercaseMessage === 'modcheck!')
         client.say(channel, `@${tags.username} modCheck? Do you really want to incur the wrath of the all powerful mods?`);
 }
