@@ -1,4 +1,5 @@
 require('dotenv').config();
+var fs = require('fs');
 const tmi = require('tmi.js');
 
 const options = {
@@ -21,11 +22,11 @@ const client = new tmi.client(options);
 
 const CMDstart = process.env.COMMAND_START;
 
+client.connect();
+
 client.on('connected', ( address, port ) => {
     client.action( process.env.TARGET_CHANNEL, 'OPlonkBot has started.' );
 });
-
-client.connect();
 
 client.on('join', (channel, username, self) => {
     if (self) return;
@@ -48,7 +49,18 @@ function CommandHandler(channel, tags, message) {
 
 	if(command === 'echo') {
 		client.say(channel, `@${tags.username}, you said: "${args.join(' ')}"`);
-	}
+    } else if (command === 'addban') {
+        if (args.length == 0) return;
+
+        user = args.shift().toLowerCase();
+
+        if (args.length != 0)
+            reason = args.join(' ');
+        else
+            reason = '';
+        
+        BanHandler(user, reason);
+    }
 }
 
 function MessageHandler(channel, tags, message) {
@@ -56,4 +68,8 @@ function MessageHandler(channel, tags, message) {
 
     if (lowercaseMessage === 'modcheck' || lowercaseMessage === 'modcheck?' || lowercaseMessage === 'modcheck!')
         client.say(channel, `@${tags.username} modCheck? Do you really want to incur the wrath of the all powerful mods?`);
+}
+
+function BanHandler(user, reason) {
+    
 }
