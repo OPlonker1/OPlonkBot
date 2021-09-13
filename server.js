@@ -82,7 +82,7 @@ client.on('connected', ( address, port ) => {
 client.on('join', (channel, username, self) => {
     if (self) return;
 
-    if (IsBanned(username))
+    if (IsBanned(username)[0])
         client.say(channel, `@OPlonker1 There is a possible ban bypasser.\n ${username}`);
 
     console.log(username);
@@ -105,7 +105,9 @@ function CommandHandler(channel, tags, message) {
 
     if (command === 'echo') {
         client.say(channel, `@${tags.username}, you said: "${args.join(' ')}"`);
-    } 
+    } else if (command === 'oplonkbot') {
+        client.say(channel, `I am a test bot created by OPlonker1. I am trying to fight the bots!! SirSword `);
+    }
 }
 
 function ModCommandHandler(channel, tags, command, args) {
@@ -115,7 +117,7 @@ function ModCommandHandler(channel, tags, command, args) {
         if (args.length == 0) return;
 
         user = args.shift().toLowerCase();
-        if (IsBanned(user)) return;
+        if (IsBanned(user)[0]) return;
 
         if (args.length != 0)
             reason = args.join(' ');
@@ -123,7 +125,21 @@ function ModCommandHandler(channel, tags, command, args) {
             reason = '';
         
         AddBan(user, reason);
-    } 
+    } else if (command === 'rmban') {
+         if (args.length == 0) return;
+
+        user = args.shift().toLowerCase();
+        let [isBan, index] = IsBanned(user);
+        
+        console.log(isBan);
+        console.log(index);
+        if (!isBan) return;
+
+        console.log(Alts);
+        Alts.splice(index);
+
+        console.log(Alts);
+    }
 }
 
 function MessageHandler(channel, tags, message) {
@@ -134,7 +150,7 @@ function MessageHandler(channel, tags, message) {
 }
 
 function AddBan(user, reason) {
-    if (IsBanned(user)) return;
+    if (IsBanned(user)[0]) return;
     
     const alt = { BanReason: reason, AccountAlts: GenerateAlts(user) };   
 
@@ -148,17 +164,19 @@ function AddBan(user, reason) {
 function IsBanned(username) {
     if (Alts.length === 0) return false;
     
-    let val = false;
+    let banned = false;
+    let arrayIndex = -1;
 
     Alts.forEach(user => {
         user.AccountAlts.forEach(alt => {
             if (username.includes(alt)) {
-                val = true;
+                banned = true;
+                arrayIndex = Alts.indexOf(user);
             }
         })
     });
 
-    return val;
+    return [banned, arrayIndex];
 }
 
 function GenerateAlts(user) {
