@@ -151,9 +151,11 @@ function IsBanned(username) {
     let val = false;
 
     Alts.forEach(user => {
-        if (user.AccountAlts.indexOf(username) != -1) {
-            val =  true;
-        }
+        user.AccountAlts.forEach(alt => {
+            if (username.includes(alt)) {
+                val = true;
+            }
+        })
     });
 
     return val;
