@@ -106,9 +106,7 @@ function CommandHandler(channel, tags, message) {
 
     ModCommandHandler(channel, tags, command, args);
 
-    if (command === 'echo') {
-        client.say(channel, `"${args.join(' ')}"`);
-    } else if (command === 'oplonkbot') {
+    if (command === 'oplonkbot') {
         client.say(channel, `I am a bot created by OPlonker1. I am trying to fight the bad bots!! MrDestructoid `);
     }
 }
@@ -116,7 +114,9 @@ function CommandHandler(channel, tags, message) {
 function ModCommandHandler(channel, tags, command, args) {
     if (tags.mod !== true) return;
 
-    if (command === 'addban') {
+    if (command === 'echo') {
+        client.say(channel, `"${args.join(' ')}"`);
+    } else if (command === 'addban') {
         if (args.length == 0) return;
 
         user = args.shift().toLowerCase();
