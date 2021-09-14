@@ -3,7 +3,7 @@ require('dotenv').config();
 const tmi = require('tmi.js');
 
 const AltGenerator = require('./altGenerator');
-const Database = require('./DataManager');
+const Database = require('./dataManager');
 
 const options = {
     options: { debug: true },
