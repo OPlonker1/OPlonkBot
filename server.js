@@ -104,9 +104,9 @@ function CommandHandler(channel, tags, message) {
     ModCommandHandler(channel, tags, command, args);
 
     if (command === 'echo') {
-        client.say(channel, `@${tags.username}, you said: "${args.join(' ')}"`);
+        client.say(channel, `"${args.join(' ')}"`);
     } else if (command === 'oplonkbot') {
-        client.say(channel, `I am a test bot created by OPlonker1. I am trying to fight the bots!! SirSword `);
+        client.say(channel, `I am a bot created by OPlonker1. I am trying to fight the bad bots!! MrDestructoid `);
     }
 }
 
