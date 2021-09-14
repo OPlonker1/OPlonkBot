@@ -3,7 +3,7 @@ require('dotenv').config();
 const fs = require('fs');
 const tmi = require('tmi.js');
 
-const AltGen = require('./altGenerator.js');
+const AltGenerator = require('./altGenerator');
 
 const options = {
     options: { debug: true },
@@ -161,7 +161,7 @@ function MessageHandler(channel, tags, message) {
 function AddBan(user, reason) {
     if (IsBanned(user)[0]) return;
     
-    const alt = { BanReason: reason, AccountAlts: AltGen.GenerateAlts(user) };   
+    const alt = { BanReason: reason, AccountAlts: AltGenerator(user) };   
     Alts.push(alt);
 
     WriteAltsToFile();

@@ -37,7 +37,9 @@ const Leets = {
     '9': ['9', 'g']
 };
 
-exports.GenerateAlts = (user) => {
+module.exports = GenerateAlts;
+
+function GenerateAlts(user) {
     let altNames;
 
     splitUser = user.split('');
