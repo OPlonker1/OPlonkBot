@@ -216,11 +216,11 @@ function WriteAltsToFile() {
 }
 
 function IsBanned(username) {
-    if (Alts.length === 0) return false;
-    
     let banned = false;
     let arrayIndex = -1;
 
+    if (Alts.length === 0) return [banned, arrayIndex];
+    
     Alts.forEach(user => {
         user.AccountAlts.forEach(alt => {
             if (username.includes(alt)) {
