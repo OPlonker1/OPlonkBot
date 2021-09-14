@@ -78,7 +78,7 @@ try {
 client.connect();
 
 client.on('connected', ( address, port ) => {
-    client.action( process.env.TARGET_CHANNEL, 'OPlonkBot v1.0 has started.' );
+    client.action( process.env.TARGET_CHANNEL, 'OPlonkBot v1.0.1 has started.' );
 });
 
 client.on('join', (channel, username, self) => {
