@@ -172,7 +172,6 @@ function ModCommandHandler(channel, tags, command, args) {
         if (args.length == 0) return;
 
         user = args.shift().toLowerCase();
-        let [isBan, index] = IsBanned(user);
 
         let [isBanned, banIndex] = IsBanned(user);
         if (isBanned)
