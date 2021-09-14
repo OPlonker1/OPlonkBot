@@ -124,7 +124,9 @@ function ModCommandHandler(channel, tags, command, args) {
         else
             reason = '';
         
-        AddBan(user, reason);
+        let banIndex = AddBan(user, reason);
+        client.say(channel, `${user} has been added to the watchlist with ${Alts[banIndex].AccountAlts.length - 1} generated alt names.`);
+
     } else if (command === 'rmban') {
         if (args.length == 0) return;
 
@@ -199,7 +201,10 @@ function AddBan(user, reason) {
         if (err)
             console.log('Error writing file', err)
     });
+
+    return Alts.indexOf(alt);
 }
+
 function IsBanned(username) {
     if (Alts.length === 0) return false;
     
