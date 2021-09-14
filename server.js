@@ -126,7 +126,7 @@ function ModCommandHandler(channel, tags, command, args) {
         
         AddBan(user, reason);
     } else if (command === 'rmban') {
-         if (args.length == 0) return;
+        if (args.length == 0) return;
 
         user = args.shift().toLowerCase();
         let [isBan, index] = IsBanned(user);
@@ -135,10 +135,50 @@ function ModCommandHandler(channel, tags, command, args) {
         console.log(index);
         if (!isBan) return;
 
-        console.log(Alts);
         Alts.splice(index);
+    } else if (command === 'ls_alts') {
+        if (args.length == 0) return;
 
-        console.log(Alts);
+        user = args.shift().toLowerCase();
+
+        let [isBanned, banIndex] = IsBanned(user);
+        if (!isBanned) return;
+
+        let startIndex = 1;
+        if (args.length != 0) {
+            startIndex = args.shift().toLowerCase();
+
+            if (startIndex > 10)
+                startIndex = 10;
+            
+            if (startIndex > Alts[banIndex].AccountAlts.length - 1)
+                startIndex = Alts[banIndex].AccountAlts.length - 1;
+        }
+        let numberToRetrieve = 1;
+        if (args.length != 0) {
+            numberToRetrieve = args.shift().toLowerCase();
+            if ((startIndex + numberToRetrieve) > Alts[banIndex].AccountAlts.length - 1)
+                startIndex = (Alts[banIndex].AccountAlts.length - 1) - numberToRetrieve;
+        }
+
+        let altList = [];
+        for (let index = startIndex; index <= startIndex + numberToRetrieve; index++) {
+            altList.push(Alts[banIndex].AccountAlts[index]);
+        }
+            
+        client.say(channel, `${altList.join('\n')}`);
+
+    } else if (command === 'isbanned') {
+        if (args.length == 0) return;
+
+        user = args.shift().toLowerCase();
+        let [isBan, index] = IsBanned(user);
+
+        let [isBanned, banIndex] = IsBanned(user);
+        if (isBanned)
+            client.say(channel, `${user} is on the watchlist. ${Alts[banIndex].AccountAlts.length - 1} alts on generated for this user.`);
+        else
+            client.say(channel, `${user} is not on the watchlist.`);
     }
 }
 
