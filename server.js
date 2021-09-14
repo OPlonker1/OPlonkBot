@@ -85,10 +85,10 @@ client.on('join', (channel, username, self) => {
     if (self) return;
 
     let [isBanned, banIndex] = IsBanned(username);
-    if (isBanned)
+    if (isBanned) {
+        //client.ban(channel, username);
         client.say(channel, `@OPlonker1 There is a possible ban bypasser.\n ${username} : ${Alts[banIndex].BanReason}`);
-
-    console.log(username);
+    }
 });
 
 client.on('message', (channel, tags, message, self) => {
