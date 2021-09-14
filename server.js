@@ -180,9 +180,36 @@ function IsBanned(username) {
 }
 
 function GenerateAlts(user) {
-    altNames = [user];
+    let altNames;
 
+    splitUser = user.split('');
 
-    console.log(`${altNames.length} alts found for ${user}.`);
+    var splitLeet = [];
+    splitUser.forEach(letter => {
+        splitLeet.push(Leets[letter]);
+    });
+
+    console.log(splitLeet);
+    
+    let currentLeet = splitLeet.shift();
+    altNames = RecursiveLeeter(currentLeet, splitLeet);
+
+    console.log(`${altNames.length - 1} alts found for ${user}.`);
+
     return altNames;
+}
+
+function RecursiveLeeter(altNames, leetArray) {
+    if (leetArray.length == 0) return altNames;
+
+    let newAlts = [];
+    let currentLeet = leetArray.shift();
+
+    currentLeet.forEach(letter => {
+        altNames.forEach(leet => {
+            newAlts.push(leet + letter);
+        })
+    })
+
+    return RecursiveLeeter(newAlts, leetArray);
 }
