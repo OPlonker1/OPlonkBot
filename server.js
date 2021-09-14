@@ -1,6 +1,8 @@
 require('dotenv').config();
-var fs = require('fs');
+
+const fs = require('fs');
 const tmi = require('tmi.js');
+
 
 const options = {
     options: { debug: true },
@@ -82,8 +84,9 @@ client.on('connected', ( address, port ) => {
 client.on('join', (channel, username, self) => {
     if (self) return;
 
-    if (IsBanned(username)[0])
-        client.say(channel, `@OPlonker1 There is a possible ban bypasser.\n ${username}`);
+    let [isBanned, banIndex] = IsBanned(username);
+    if (isBanned)
+        client.say(channel, `@OPlonker1 There is a possible ban bypasser.\n ${username} : ${Alts[banIndex].BanReason}`);
 
     console.log(username);
 });
@@ -137,10 +140,7 @@ function ModCommandHandler(channel, tags, command, args) {
 
         Alts.splice(index);
 
-        fs.writeFileSync('NameAlts.json', JSON.stringify(Alts), err => {
-        if (err)
-            console.log('Error writing file', err)
-        });
+        WriteAltsToFile();
         
         client.say(channel, `${user} has been removed from the watchlist`);
     } else if (command === 'ls_alts') {
@@ -203,12 +203,16 @@ function AddBan(user, reason) {
 
     Alts.push(alt);
 
+    WriteAltsToFile();
+
+    return Alts.indexOf(alt);
+}
+
+function WriteAltsToFile() {
     fs.writeFileSync('NameAlts.json', JSON.stringify(Alts), err => {
         if (err)
             console.log('Error writing file', err)
     });
-
-    return Alts.indexOf(alt);
 }
 
 function IsBanned(username) {
