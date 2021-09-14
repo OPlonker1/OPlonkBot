@@ -176,7 +176,7 @@ function ModCommandHandler(channel, tags, command, args) {
 
         let [isBanned, banIndex] = IsBanned(user);
         if (isBanned)
-            client.say(channel, `${user} is on the watchlist. ${Alts[banIndex].AccountAlts.length - 1} alts on generated for this user.`);
+            client.say(channel, `${user} is on the watchlist. ${Alts[banIndex].AccountAlts.length - 1} alts generated for this user.`);
         else
             client.say(channel, `${user} is not on the watchlist.`);
     }
