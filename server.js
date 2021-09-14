@@ -1,9 +1,9 @@
 require('dotenv').config();
 
-const fs = require('fs');
 const tmi = require('tmi.js');
 
 const AltGenerator = require('./altGenerator');
+const Database = require('./DataManager');
 
 const options = {
     options: { debug: true },
@@ -29,13 +29,7 @@ var Alts;
 
 const ViewersURL = `https://tmi.twitch.tv/group/user/${process.env.TARGET_CHANNEL}/chatters`;
 
-try {
-    const jsonAlts = fs.readFileSync('NameAlts.json');
-    Alts = JSON.parse(jsonAlts);
-} catch (err) {
-    console.log(err);
-    return;
-}
+Alts = Database.Read();
 
 client.connect();
 
@@ -102,7 +96,7 @@ function ModCommandHandler(channel, tags, command, args) {
 
         Alts.splice(index);
 
-        WriteAltsToFile();
+        Database.Write(Alts);
         
         client.say(channel, `${user} has been removed from the watchlist`);
     } else if (command === 'ls_alts') {
@@ -164,16 +158,9 @@ function AddBan(user, reason) {
     const alt = { BanReason: reason, AccountAlts: AltGenerator(user) };   
     Alts.push(alt);
 
-    WriteAltsToFile();
+    Database.Write(Alts);
 
     return Alts.indexOf(alt);
-}
-
-function WriteAltsToFile() {
-    fs.writeFileSync('NameAlts.json', JSON.stringify(Alts), err => {
-        if (err)
-            console.log('Error writing file', err)
-    });
 }
 
 function IsBanned(username) {
