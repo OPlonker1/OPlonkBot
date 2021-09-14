@@ -133,11 +133,16 @@ function ModCommandHandler(channel, tags, command, args) {
         user = args.shift().toLowerCase();
         let [isBan, index] = IsBanned(user);
         
-        console.log(isBan);
-        console.log(index);
         if (!isBan) return;
 
         Alts.splice(index);
+
+        fs.writeFileSync('NameAlts.json', JSON.stringify(Alts), err => {
+        if (err)
+            console.log('Error writing file', err)
+        });
+        
+        client.say(channel, `${user} has been removed from the watchlist`);
     } else if (command === 'ls_alts') {
         if (args.length == 0) return;
 
@@ -148,7 +153,7 @@ function ModCommandHandler(channel, tags, command, args) {
 
         let startIndex = 1;
         if (args.length != 0) {
-            startIndex = args.shift().toLowerCase();
+            startIndex = parseInt(args.shift());
 
             if (startIndex > 10)
                 startIndex = 10;
@@ -156,20 +161,21 @@ function ModCommandHandler(channel, tags, command, args) {
             if (startIndex > Alts[banIndex].AccountAlts.length - 1)
                 startIndex = Alts[banIndex].AccountAlts.length - 1;
         }
+
         let numberToRetrieve = 1;
         if (args.length != 0) {
-            numberToRetrieve = args.shift().toLowerCase();
+            numberToRetrieve = parseInt(args.shift());
             if ((startIndex + numberToRetrieve) > Alts[banIndex].AccountAlts.length - 1)
                 startIndex = (Alts[banIndex].AccountAlts.length - 1) - numberToRetrieve;
         }
 
         let altList = [];
-        for (let index = startIndex; index <= startIndex + numberToRetrieve; index++) {
+        for (let index = startIndex; index < startIndex + numberToRetrieve; index++) {
             altList.push(Alts[banIndex].AccountAlts[index]);
         }
-            
+        
         client.say(channel, `${altList.join('\n')}`);
-
+        
     } else if (command === 'isbanned') {
         if (args.length == 0) return;
 
