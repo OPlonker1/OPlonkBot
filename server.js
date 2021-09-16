@@ -73,16 +73,20 @@ function CommandHandler(channel, tags, message) {
     } else if (command === 'squid') {
         client.say(channel, `\nSquid1 Squid2 Squid3 Squid2 Squid4`);
     } else if (command === 'toxic') {
-        client.say(channel, `Wait.... is that a ToxicSpud? PJSalt`);
+        client.say(channel, `Wait.... is that a ToxicSpud? PJSalt cvHazmat`);
     } else if (command === 'bonk') {
-        if (args.length == 0)
-            client.say(channel, `Bonk, to jail with you!`);
-        let user = args.shift();
+        let str = '';
+        if (args.length != 0) {
 
-        if (user.charAt(0) === '@')
-            user = user.slice(1, user.length);
+            let user = args.shift();
+            if (user.charAt(0) === '@')
+                user = user.slice(1, user.length);
+            
+            str += `@${user} `;
+        }
         
-        client.say(channel, `@${user} bonk, to jail with you!`);
+        str += 'Bonk, to jail with you! FootYellow StinkyCheese';
+        client.say(channel, str);        
     }
 }
 
