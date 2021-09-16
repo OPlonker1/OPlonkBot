@@ -64,6 +64,25 @@ function CommandHandler(channel, tags, message) {
 
     if (command === 'oplonkbot') {
         client.say(channel, `I am a bot created by OPlonker1. I am trying to fight the bad bots!! MrDestructoid `);
+    } else if (command === 'mic') {
+        client.say(channel, `Mic got tired. Have to wake it up. BOP`);
+    } else if (command === 'internet') {
+        client.say(channel, `All the ether is leaking out of the ethernet cables!! panicBasket`);
+    }else if (command === 'screen') {
+        client.say(channel, `I must keep my gameplay secret BrainSlug `);
+    } else if (command === 'squid') {
+        client.say(channel, `\nSquid1 Squid2 Squid3 Squid2 Squid4`);
+    } else if (command === 'toxic') {
+        client.say(channel, `Wait.... is that a ToxicSpud? PJSalt`);
+    } else if (command === 'bonk') {
+        if (args.length == 0)
+            client.say(channel, `Bonk, to jail with you!`);
+        let user = args.shift();
+
+        if (user.charAt(0) === '@')
+            user = user.slice(1, user.length);
+        
+        client.say(channel, `@${user} bonk, to jail with you!`);
     }
 }
 
@@ -71,7 +90,7 @@ function ModCommandHandler(channel, tags, command, args) {
     if (tags.mod !== true) return;
 
     if (command === 'echo') {
-        client.say(channel, `"${args.join(' ')}"`);
+        client.say(channel, `${args.join(' ')}`);
     } else if (command === 'addban') {
         if (args.length == 0) return;
 
@@ -142,6 +161,8 @@ function ModCommandHandler(channel, tags, command, args) {
             client.say(channel, `${user} is on the watchlist. ${Alts[banIndex].AccountAlts.length - 1} alts generated for this user.`);
         else
             client.say(channel, `${user} is not on the watchlist.`);
+    } else if (command === 'raid') {
+        client.say(channel, `TombRaid TombRaid Welcome Raiders!! TombRaid TombRaid `);
     }
 }
 
@@ -150,6 +171,18 @@ function MessageHandler(channel, tags, message) {
 
     if (lowercaseMessage === 'modcheck' || lowercaseMessage === 'modcheck?' || lowercaseMessage === 'modcheck!')
         client.say(channel, `@${tags.username} modCheck? Do you really want to incur the wrath of the all powerful mods?`);
+    else if (lowercaseMessage.includes('chat blind?'))
+        client.say(channel, `Chat blind confirmed`);
+    else if (lowercaseMessage == 'ddreminder')
+        client.say(channel, `"Remind yourself that overconfidence is a slow and insidious killer" - Darkest Dungeon`);
+    else if (lowercaseMessage == 'aim assist')
+        client.say(channel, `My aim is usually better than this I swear, too much aim assist in this game!`);
+    else if (lowercaseMessage === 'smort')
+        client.say(channel, `That's a lot of brain cells!`);
+        else if (lowercaseMessage === 'stronk')
+        client.say(channel, `Got them big stronk muscles!`);
+    else if (lowercaseMessage.includes('rip ') || lowercaseMessage.includes(' rip') || lowercaseMessage == 'rip')
+        client.say(channel, `riPepperonis riPepperonis`);
 }
 
 function AddBan(user, reason) {
