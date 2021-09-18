@@ -36,7 +36,7 @@ client.on('connected', ( address, port ) => {
 client.on('join', (channel, username, self) => {
     if (self) return;
 
-    let [isBanned, banIndex] = IsBanned(username);
+    let [isBanned, banIndex] = BanManager.IsBanned(username);
     if (isBanned) {
         //client.ban(channel, username);
         client.say(channel, `@${TARGET_MOD} There is a possible ban bypasser.\n ${username} : ${Alts[banIndex].BanReason}`);
