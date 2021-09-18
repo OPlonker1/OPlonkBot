@@ -26,6 +26,7 @@ const client = new tmi.client(options);
 const CMDstart = process.env.COMMAND_START;
 
 BanManager.Init();
+Commands.Init(client);
 
 client.connect();
 
@@ -45,8 +46,6 @@ client.on('join', (channel, username, self) => {
 
 client.on('message', (channel, tags, message, self) => {
     if (self) return;
-
-    message = message.toLowerCase();
 
     if (message.startsWith(CMDstart))
         Commands.CommandHandler(channel, tags, message);

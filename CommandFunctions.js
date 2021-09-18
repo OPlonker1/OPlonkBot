@@ -5,14 +5,20 @@ const Viewers = require('./GetViewerList');
 
 /*** Command Handlers ***/
 
+module.exports.Init = Init;
 module.exports.CommandHandler = CommandHandler;
 module.exports.MessageHandler = MessageHandler;
 
+let client;
+
+function Init(_client){
+    client = _client;
+}
 
 function CommandHandler(channel, tags, message) {
     let CMDstart = process.env.COMMAND_START;
 	const args = message.slice( CMDstart.length ).split(' ');
-    const command = args.shift();
+    const command = args.shift().toLowerCase();;
 
     ModCommandHandler(channel, tags, command, args);
     ViewerCommandHandler(channel, tags, command, args);
@@ -124,7 +130,7 @@ function isAddBan(command) {
 function addBan(channel, args) {
     if (args.length == 0) return;
 
-    user = args.shift();
+    user = args.shift().toLowerCase();
     if (BanManager.IsBanned(user)[0]) return;
 
     if (args.length != 0)
@@ -144,7 +150,7 @@ function isRmBan(command) {
 function rmBan(channel, args) {
     if (args.length == 0) return;
 
-    user = args.shift();
+    user = args.shift().toLowerCase();
     BanManager.RmWatchlist(user);
     
     client.say(channel, `${user} has been removed from the watchlist`);
@@ -158,7 +164,7 @@ function isLsAlts(command) {
 function lsAlts(channel, args) {
     if (args.length == 0) return;
 
-    username = args.shift();
+    username = args.shift().toLowerCase();
 
     let user = BanManager.GetBannedUser(username);
     if (user === null) return;
@@ -197,7 +203,7 @@ function isIsBanned(command) {
 function isBanned(channel, args) {
     if (args.length == 0) return;
 
-    username = args.shift();
+    username = args.shift().toLowerCase();
 
     let user = BanManager.GetBannedUser(username);
 
@@ -269,7 +275,7 @@ function isToxic(command) {
 }
 
 function toxic(channel) {
-    client.say(channel, `Wait.... is that a ToxicSpud? PJSalt cvHazmat`);
+    client.say(channel, `Wait.... is that a ToxicSpud? PJSalt \t cvHazmat`);
 }
 
 //shoot
@@ -291,8 +297,8 @@ async function shoot(channel, username, args) {
     let selectedViewer;
     if (args.length != 0) {
 
-        selectedViewer = args.shift();
-        if (user.charAt(0) === '@')
+        selectedViewer = args.shift().toLowerCase();
+        if (selectedViewer.charAt(0) === '@')
             selectedViewer = selectedViewer.slice(1, selectedViewer.length);
  
     } else {
@@ -303,7 +309,7 @@ async function shoot(channel, username, args) {
     if (AllViewers.includes(selectedViewer)) {
         if (selectedViewer == username)
             client.say(channel, `@${username}\'s gun has jammed!!`);
-        else if (selectedViewer == process.env.TWITCH_USERNAME)
+        else if (selectedViewer == process.env.TWITCH_USERNAME.toLowerCase())
             client.say(channel, `@${username} has shot at @${selectedViewer}, How rude!!`);
         else
             client.say(channel, `@${username} has shot at @${selectedViewer}`);
@@ -339,7 +345,7 @@ function bonk(channel, args) {
     let str = '';
     if (args.length != 0) {
 
-        let user = args.shift();
+        let user = args.shift().toLowerCase();
         if (user.charAt(0) === '@')
             user = user.slice(1, user.length);
         
