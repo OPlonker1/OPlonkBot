@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const tmi = require('tmi.js');
 
+const BanManager = require('./BanManager');
 const Commands = require('./CommandFunctions');
 
 const options = {
