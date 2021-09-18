@@ -10,6 +10,7 @@ module.exports.MessageHandler = MessageHandler;
 
 
 function CommandHandler(channel, tags, message) {
+    let CMDstart = process.env.COMMAND_START;
 	const args = message.slice( CMDstart.length ).split(' ');
     const command = args.shift();
 
