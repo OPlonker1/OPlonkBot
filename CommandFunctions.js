@@ -74,13 +74,15 @@ function ViewerCommandHandler(channel, tags, command, args) {
     } else if (isHydrate(command)) {
         hydrate(channel);
         
-    } else if (command === 'bonk') {
+    } else if (is_bonk(command)) {
         bonk(channel, args);
         
     }
 }
 
 function MessageHandler(channel, tags, message) {
+    message = message.toLowerCase();
+
     if (isModCheck(message)) {
         modCheck(channel, tags);
 
@@ -423,7 +425,7 @@ function stronk(channel) {
 
 //rip
 function isRip(message) {
-    return message.includes('rip ') || message.includes(' rip') || message == 'rip';
+    return message.includes(' rip ') || message == 'rip';
 }
 
 function rip(channel) {
