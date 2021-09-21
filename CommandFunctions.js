@@ -74,8 +74,14 @@ function ViewerCommandHandler(channel, tags, command, args) {
     } else if (isHydrate(command)) {
         hydrate(channel);
         
-    } else if (is_bonk(command)) {
+    } else if (isBonk(command)) {
         bonk(channel, args);
+        
+    } else if (isTunes(command)) {
+        tunes(channel, args);
+        
+    } else if (isDriving(command)) {
+        driving(channel, args);
         
     }
 }
@@ -358,6 +364,24 @@ function bonk(channel, args) {
     client.say(channel, str);  
 }
 
+//tunes
+function isTunes(command) {
+    return command === 'tunes';
+}
+
+function tunes(channel) {
+    client.say(channel, `PepoDance blobDance pepeJAM catJAM`);
+}
+
+//driving
+function isDriving(command) {
+    return command === 'driving';
+}
+
+function driving(channel) {
+    client.say(channel, `Driving is easy!! monkaSTEER `);
+}
+
 /*** Message Handler ***/
 
 //modCheck
@@ -375,7 +399,7 @@ function isChatBlind(message) {
 }
 
 function chatBlind(channel) {
-    client.say(channel, `Chat blind confirmed`);
+    client.say(channel, `Chat blind confirmed! peepoLeave`);
 }
 
 //ddReminder
@@ -402,7 +426,7 @@ function isAimAssist(message) {
 }
 
 function aimAssist(channel) {
-    client.say(channel, `My aim is usually better than this I swear, too much aim assist in this game!`);
+    client.say(channel, `My aim is usually better than this I swear, too much aim assist in this game! PepegaAim `);
 }
 
 //smort
@@ -411,7 +435,7 @@ function isSmort(message) {
 }
 
 function smort(channel) {
-    client.say(channel, `That's a lot of brain cells!`);
+    client.say(channel, `That's a lot of brain cells! 5Head`);
 }
 
 //stronk
