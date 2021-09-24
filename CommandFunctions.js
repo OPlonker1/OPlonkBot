@@ -18,7 +18,7 @@ function Init(_client){
 function CommandHandler(channel, tags, message) {
     let CMDstart = process.env.COMMAND_START;
 	const args = message.slice( CMDstart.length ).split(' ');
-    const command = args.shift().toLowerCase();;
+    const command = args.shift().toLowerCase();
 
     ModCommandHandler(channel, tags, command, args);
     ViewerCommandHandler(channel, tags, command, args);
@@ -78,10 +78,16 @@ function ViewerCommandHandler(channel, tags, command, args) {
         bonk(channel, args);
         
     } else if (isTunes(command)) {
-        tunes(channel, args);
+        tunes(channel);
         
     } else if (isDriving(command)) {
-        driving(channel, args);
+        driving(channel);
+        
+    } else if (isSteerAssist(command)) {
+        steerAssist(channel);
+        
+    } else if (isChildren(command)) {
+        children(channel);
         
     }
 }
@@ -146,7 +152,14 @@ function addBan(channel, args) {
     else
         reason = '';
     
-    let numAlts = BanManager.AddToWatchlist(user, reason);
+    let numAlts;
+    if (args.length == 0) {
+        numAlts = BanManager.AddToWatchlist(user, reason);
+    } else {
+        let boolArg = args.shift().toLowerCase();
+        numAlts = BanManager.AddToWatchlist(user, reason, boolArg === 'true');
+    }
+    
     client.say(channel, `${user} has been added to the watchlist with ${numAlts} generated alt names.`);
 }
 
@@ -238,7 +251,7 @@ function isOPlonkBot(command) {
 }
 
 function OPlonkBot(channel) {
-    client.say(channel, `I am a bot created by OPlonker1. I am trying to fight the bad bots!! MrDestructoid\n I also add some fun commands GlitchCat  `);
+    client.say(channel, `I am a bot created by OPlonker1. I add some fun commands GlitchCat, I am also trying to fight the bad bots!! MrDestructoid `);
 }
 
 //mic
@@ -382,6 +395,25 @@ function driving(channel) {
     client.say(channel, `Driving is easy!! monkaSTEER `);
 }
 
+//steerassist
+function isSteerAssist(command) {
+    return command === 'steerassist';
+}
+
+function steerAssist(channel) {
+    client.say(channel, `Steer assist is on, no monkaSTEER for me!!`);
+}
+
+//children
+function isChildren(command) {
+    return command === 'children';
+}
+
+function children(channel) {
+    client.say(channel, `"They're all mistakes, children. Filthy, nasty things. Glad I never was one." - Miss Trunchbull, Matlida`);
+}
+
+
 /*** Message Handler ***/
 
 //modCheck
@@ -449,7 +481,8 @@ function stronk(channel) {
 
 //rip
 function isRip(message) {
-    return message.includes(' rip ') || message == 'rip';
+    let words = message.split(' ');
+    return words.includes('rip');
 }
 
 function rip(channel) {

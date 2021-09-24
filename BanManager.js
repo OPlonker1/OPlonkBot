@@ -13,8 +13,13 @@ function Init() {
     Alts = Database.Read();
 }
 
-function AddToWatchlist(user, reason) {
-    const alt = { BanReason: reason, AccountAlts: AltGenerator(user) };   
+function AddToWatchlist(user, reason, AddAlts = true) {
+    let alt;
+    if (AddAlts) {
+        alt = { BanReason: reason, AccountAlts: AltGenerator(user) };
+    } else {
+        alt = { BanReason: reason, AccountAlts: user };
+    }
     Alts.push(alt);
 
     Database.Write(Alts);
