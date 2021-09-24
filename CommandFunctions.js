@@ -307,7 +307,7 @@ function isShoot(command) {
 async function shoot(channel, username, args) {
     channel = channel.slice(1, channel.length);
 
-    let viewers = Viewers.GetViewerList(channel);
+    let viewers = await Viewers.GetViewerList(channel);
 
     let AllViewers = [...viewers.chatters.moderators, ...viewers.chatters.viewers, ...viewers.chatters.broadcaster];
 

@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^10.0.0",
-    "sync-fetch": "^0.3.0",
+    "node-fetch": "^2.6.5",
     "tmi.js": "^1.8.5"
   }
 }
