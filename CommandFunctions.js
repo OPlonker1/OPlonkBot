@@ -89,6 +89,15 @@ function ViewerCommandHandler(channel, tags, command, args) {
     } else if (isChildren(command)) {
         children(channel);
         
+    } else if (isDDReminder(command)) {
+        ddReminder(channel);
+
+    } else if (isNotToday(command)) {
+        notToday(channel);
+
+    } else if (isHope(command)) {
+        hope(channel);
+
     }
 }
 
@@ -100,12 +109,6 @@ function MessageHandler(channel, tags, message) {
 
     } else if (isChatBlind(message)) {
         chatBlind(channel);
-
-    } else if (isDDReminder(message)) {
-        ddReminder(channel);
-
-    } else if (isNotToday(message)) {
-        notToday(channel);
 
     } else if (isAimAssist(message)) {
         aimAssist(channel);
@@ -413,6 +416,33 @@ function children(channel) {
     client.say(channel, `"They're all mistakes, children. Filthy, nasty things. Glad I never was one." - Miss Trunchbull, Matilda`);
 }
 
+//ddReminder
+function isDDReminder(command) {
+    return command === 'ddreminder';
+}
+
+function ddReminder(channel) {
+    client.say(channel, `"Remind yourself that overconfidence is a slow and insidious killer" - Darkest Dungeon`);
+}
+
+//notToday
+function isNotToday(command) {
+    return command === 'not today';
+}
+
+function notToday(channel) {
+    client.say(channel, `"Many Fall In The Face Of Chaos, But Not This One. Not Today." - Darkest Dungeon`);
+}
+
+//hope
+function isHope(command) {
+    return message === 'hope';
+}
+
+function hope(channel) {
+    client.say(channel, `"A little hope, however desperate is never without worth." - Darkest Dungeon`);
+}
+
 
 /*** Message Handler ***/
 
@@ -432,24 +462,6 @@ function isChatBlind(message) {
 
 function chatBlind(channel) {
     client.say(channel, `Chat blind confirmed! peepoLeave`);
-}
-
-//ddReminder
-function isDDReminder(message) {
-    return message === 'ddreminder';
-}
-
-function ddReminder(channel) {
-    client.say(channel, `"Remind yourself that overconfidence is a slow and insidious killer" - Darkest Dungeon`);
-}
-
-//notToday
-function isNotToday(message) {
-    return message === 'not today';
-}
-
-function notToday(channel) {
-    client.say(channel, `"Many Fall In The Face Of Chaos, But Not This One. Not Today." - Darkest Dungeon`);
 }
 
 //aimAssist
