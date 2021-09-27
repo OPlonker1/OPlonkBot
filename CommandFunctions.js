@@ -427,7 +427,7 @@ function ddReminder(channel) {
 
 //notToday
 function isNotToday(command) {
-    return command === 'not today';
+    return command === 'nottoday';
 }
 
 function notToday(channel) {
@@ -436,7 +436,7 @@ function notToday(channel) {
 
 //hope
 function isHope(command) {
-    return message === 'hope';
+    return command === 'hope';
 }
 
 function hope(channel) {

@@ -77,9 +77,11 @@ client.on('join', async (channel, username, self) => {
     })
 
     if (found) return;
-
-    if (await BotFinder.IsBot(username)) {
-        client.say(channel, `${username} is a potential bot`);
+    [isBot, BotDetails] = await BotFinder.IsBot(username);
+    if (isBot) {
+        client.say(channel, `${username} is a potential bot, in ${BotDetails[1]} channels`);
+        if (BotDetails[1] > 100)
+            client.ban(channel, username, 'Accused of being a bot.');
     }
 });
 

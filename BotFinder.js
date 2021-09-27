@@ -56,11 +56,14 @@ async function GetViewerBots(channel) {
 module.exports.IsBot = IsBot;
 async function IsBot(username) {
     let found = false;
+    let foundBot;
     let botList = await GetBotList();
     botList.forEach( bot => {
-        if (bot[0] === username)
+        if (bot[0] === username) {
             found = true;
+            foundBot = bot;
+        }
     });
 
-    return found;
+    return [found, foundBot];
 }
