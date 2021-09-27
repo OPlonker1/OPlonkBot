@@ -5,6 +5,7 @@ const tmi = require('tmi.js');
 const BotFinder = require('./BotFinder');
 const BanManager = require('./BanManager');
 const Commands = require('./CommandFunctions');
+const { sleep } = require('./Utils');
 
 const options = {
     options: { debug: true },
@@ -19,55 +20,65 @@ const options = {
         password: process.env.TWITCH_PASSWORD
     },
 
-    channels: [process.env.TARGET_CHANNEL]
+    //channels: [process.env.TARGET_CHANNELS]
+    
 };
 
 const client = new tmi.client(options);
 
 const CMDstart = process.env.COMMAND_START;
 
-BanManager.Init();
-Commands.Init(client);
+let FoundBots = {};
 
-client.connect();
+function Init(){
+    BanManager.Init();
+    Commands.Init(client);
 
-let FoundBots;
+    client.connect();
+}
 
-client.on('connected', async (address, port) => {
-    FoundBots = await BotFinder.GetViewerBots(process.env.TARGET_CHANNEL);
-    let Bots = await BotFinder.GetBotList();
-    
-    client.action(process.env.TARGET_CHANNEL, `v1.0.3 has started. Aware of ${Bots.length} bots currently.`);
+client.on('connected', (address, port) => {
+    let channelList = process.env.TARGET_CHANNELS.split(',');
 
-    if (FoundBots.length > 0) {
-        let botString = `${FoundBots.length} possible bot(s) found in chat. `;
-        FoundBots.forEach(bot => {
-            botString += `${bot[0]}, `;
-        })
-        client.say(process.env.TARGET_CHANNEL, botString);
-    }
+    channelList.forEach(async (channel) => {
+        client.join(channel);
+        FoundBots[channel] = await BotFinder.GetViewerBots(channel);;
+        let Bots = await BotFinder.GetBotList();
 
+        client.action(channel, `v1.0.3 has started. Aware of ${Bots.length} bots currently.`);
+
+        if (FoundBots[channel].length > 0) {
+            let botString = `${FoundBots[channel].length} possible bot(s) found in chat. `;
+            FoundBots[channel].forEach(bot => {
+                botString += `${bot[0]} : ${bot[1]} channels, `;
+            })
+
+            await sleep();
+            client.say(channel, botString);
+        }
+    });
 });
 
-client.on('join', (channel, username, self) => {
+client.on('join', async (channel, username, self) => {
     if (self) return;
 
     let [isBanned, banIndex] = BanManager.IsBanned(username);
     if (isBanned) {
         client.ban(channel, username);
-        client.whisper(`@${TARGET_MOD}`, `${username} has been banned.`);
+        client.whisper(`${TARGET_MOD}`, `${username} has been banned.`);
         //client.say(channel, `@${TARGET_MOD} There is a possible ban bypasser.\n ${username} : ${Alts[banIndex].BanReason}`);
+        return;
     }
 
     let found = false;
-    FoundBots.forEach(bot => {
+    FoundBots[channel.slice(1,channel.length)].forEach(bot => {
         if (bot[0] === username)
             found = true;
     })
 
     if (found) return;
 
-    if (BotFinder.IsBot(username)) {
+    if (await BotFinder.IsBot(username)) {
         client.say(channel, `${username} is a potential bot`);
     }
 });
@@ -80,3 +91,5 @@ client.on('message', (channel, tags, message, self) => {
     else
         Commands.MessageHandler(channel, tags, message);
 });
+
+Init();
