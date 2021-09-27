@@ -45,7 +45,7 @@ client.on('connected', (address, port) => {
         FoundBots[channel] = await BotFinder.GetViewerBots(channel);;
         let Bots = await BotFinder.GetBotList();
 
-        client.action(channel, `v1.0.3 has started. Aware of ${Bots.length} bots currently.`);
+        client.action(channel, `v1.1.0 has started. Aware of ${Bots.length} bots currently.`);
 
         if (FoundBots[channel].length > 0) {
             let botString = `${FoundBots[channel].length} possible bot(s) found in chat. `;
