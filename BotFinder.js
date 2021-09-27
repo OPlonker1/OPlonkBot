@@ -2,7 +2,7 @@ const fetch = require('node-fetch');
 
 const Viewers = require('./GetViewerList');
 
-const KnownBots = ['soundalerts', 'commanderroot', 'anotherttvviewer', 'nightbot', 'streamelements'];
+const AllowedBots = ['soundalerts', 'commanderroot', 'anotherttvviewer', 'nightbot', 'streamelements','sery_bot'];
 
 let BotList = null;
 
@@ -24,7 +24,7 @@ async function GetBotList() {
         const bots = dataJson.bots;
 
         bots.forEach( (bot) => {
-            if(!KnownBots.includes(bot[0]))
+            if(!AllowedBots.includes(bot[0]))
                 result.push([bot[0], bot[1]]);
         });
 
@@ -57,7 +57,7 @@ async function GetViewerBots(channel) {
 }
 
 module.exports.IsBot = IsBot;
-function IsBot(username) {
+async function IsBot(username) {
     let found = false;
     let botList = await GetBotList();
     botList.forEach( bot => {
