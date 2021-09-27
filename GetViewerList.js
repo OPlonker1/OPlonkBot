@@ -1,9 +1,11 @@
 const fetch = require('node-fetch');
 
+const KnownBots = ['soundalerts', 'commanderroot', 'anotherttvviewer', 'nightbot', 'streamelements', 'streamlabs', 'sery_bot'];
+
 module.exports.GetViewerList = GetViewerList;
 module.exports.FilterKnownBotsFromList = FilterKnownBotsFromList;
+module.exports.Bots = KnownBots;
 
-const KnownBots = ['soundalerts', 'commanderroot', 'anotherttvviewer', 'nightbot', 'streamelements','sery_bot'];
 
 async function GetViewerList(channelName) {
     let url = `https://tmi.twitch.tv/group/user/${channelName}/chatters`;
