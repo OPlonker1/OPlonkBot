@@ -25,7 +25,7 @@ function CommandHandler(channel, tags, message) {
 }
 
 function ModCommandHandler(channel, tags, command, args) {
-    if (tags.mod !== true) return;
+    if (tags.mod !== true && tags.badges["broadcaster"] === undefined) return;
 
     if (isEcho(command)) {
         echo(channel, args);
@@ -410,7 +410,7 @@ function isChildren(command) {
 }
 
 function children(channel) {
-    client.say(channel, `"They're all mistakes, children. Filthy, nasty things. Glad I never was one." - Miss Trunchbull, Matlida`);
+    client.say(channel, `"They're all mistakes, children. Filthy, nasty things. Glad I never was one." - Miss Trunchbull, Matilda`);
 }
 
 
