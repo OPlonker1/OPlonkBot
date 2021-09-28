@@ -37,7 +37,28 @@ const Leets = {
     '9': ['9', 'g']
 };
 
-module.exports = GenerateAlts;
+const types = {
+    constant: 'constant',
+    regular: 'regular',
+    variant: 'variant'
+};
+
+const varLeets = {
+    'a': ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'],
+    '0': ['1', '2', '3', '4', '5', '6', '7', '8', '9']
+};
+
+module.exports = CreateAlts;
+
+function CreateAlts(username) {
+    let alts;
+    if (username.includes('[') || username.includes('(') || username.includes('{'))
+        alts = varAltGenerator(username);
+    else
+        alts = GenerateAlts(username);
+    
+    return alts;
+}
 
 function GenerateAlts(user) {
     let altNames;
@@ -48,8 +69,6 @@ function GenerateAlts(user) {
     splitUser.forEach(letter => {
         splitLeet.push(Leets[letter]);
     });
-
-    console.log(splitLeet);
     
     let currentLeet = splitLeet.shift();
     altNames = RecursiveLeeter(currentLeet, splitLeet);
@@ -72,4 +91,72 @@ function RecursiveLeeter(altNames, leetArray) {
     })
 
     return RecursiveLeeter(newAlts, leetArray);
+}
+
+function varAltGenerator(username) {
+    let result = [];
+    let altObjects = AltObjectifier(username);
+    
+    let altParts = [];
+    for (let i = 0; i < altObjects.length; i++) {
+        let temp;
+        object = altObjects[i];
+        
+        if (object['type'] === types.constant)
+            temp = object['word'];
+        else if (object['type'] === types.regular)
+            temp = altGenerator.GenerateAlts(object['word']);
+        else if (object['type'] === types.variant)
+            temp = varLeeter(object['word']);
+
+        altParts.push(temp);
+    }
+
+    let starts = altParts.shift();
+    result = RecursiveLeeter(starts, altParts);
+
+    return result;
+}
+
+function AltObjectifier(username) {
+    let step1 = username.split('');
+    let index = [];
+
+    for (let i = 0; i < step1.length; i++) {
+        if (step1[i] === '{' || step1[i] === '}' || step1[i] === '(' || step1[i] === ')' || step1[i] === '[' || step1[i] === ']')
+            index.push(i);
+    }
+
+    let step2 = [];
+    for (let i = 0; i < index.length; i += 2) {
+        step2.push(username.slice(index[i], index[i + 1]));
+    }
+
+    let step3 = [];
+    step2.forEach(word => {
+        if (word[0] === '{')
+            step3.push({ 'type': types.constant, 'word': [word.slice(1, word.length)] });
+        else if (word[0] === '[')
+            step3.push({ 'type': types.variant, 'word': word.slice(1, word.length) });
+        else if (word[0] === '(')
+            step3.push({ 'type': types.regular, 'word': word.slice(1, word.length) });
+    });
+
+    return step3;
+}
+
+function varLeeter(word) {
+    let letters = word.split('');
+    let leets = [];
+
+    letters.forEach(letter => {
+        if (isNaN(letter)) {
+            leets.push(varLeets['a']);
+        } else {
+            leets.push(varLeets['0']);
+        }
+    })
+
+    let current = leets.shift();
+    return RecursiveLeeter(current, leets);
 }
