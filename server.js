@@ -7,7 +7,7 @@ const BanManager = require('./BanManager');
 const Commands = require('./CommandFunctions');
 const { sleep } = require('./Utils');
 
-TARGET_CHANNELS = ['oplonker1', 'tornadopotato99', 'somegingergirl'];
+const TARGET_CHANNELS = ['oplonker1', 'tornadopotato99', 'somegingergirl'];
 
 const options = {
     options: { debug: true },
@@ -50,7 +50,7 @@ client.on('join', async (channel, username, self) => {
     let [isBanned, banIndex] = BanManager.IsBanned(username);
     if (isBanned) {
         client.ban(channel, username);
-        client.whisper(`${TARGET_MOD}`, `${username} has been banned.`);
+        client.whisper(`${process.env.TARGET_MOD}`, `${username} has been banned.`);
         return;
     }
 
@@ -61,7 +61,7 @@ client.on('join', async (channel, username, self) => {
     })
 
     if (found) return;
-    [isBot, BotDetails] = await BotFinder.IsBot(username);
+    let [isBot, BotDetails] = await BotFinder.IsBot(username);
     if (isBot) {
         client.say(channel, `${username} is a potential bot, in ${BotDetails[1]} channels`);
         if (BotDetails[1] > 100)
