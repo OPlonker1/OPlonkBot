@@ -5,6 +5,8 @@ const Viewers = require('./GetViewerList');
 let BotList = null;
 
 module.exports.GetBotList = GetBotList;
+module.exports.GetViewerBots = GetViewerBots;
+
 async function GetBotList() {
     if (BotList !== null)
         return BotList;
@@ -33,8 +35,6 @@ async function GetBotList() {
     BotList = result;
     return result;
 }
-
-module.exports.GetViewerBots = GetViewerBots;
 
 async function GetViewerBots(channel) {
     let FoundBots = [];
