@@ -41,7 +41,11 @@ client.on('connected', (address, port) => {
     let channelList = process.env.TARGET_CHANNELS.split(',');
 
     channelList.forEach(async (channel) => {
-        client.join(channel);
+        try {
+            client.join(channel);
+        } catch (err) {
+            console.log('Error joining channel:\n' + err)
+        }
         FoundBots[channel] = await BotFinder.GetViewerBots(channel);;
         let Bots = await BotFinder.GetBotList();
 
