@@ -1,5 +1,5 @@
 const AltGenerator = require('./altGenerator');
-const Database = require('./dataManager');
+const Database = require('./DataManager');
 
 module.exports.Init = Init;
 module.exports.AddToWatchlist = AddToWatchlist;
