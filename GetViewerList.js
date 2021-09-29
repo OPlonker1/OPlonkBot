@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 
-const KnownBots = ['soundalerts', 'commanderroot', 'anotherttvviewer', 'nightbot', 'streamelements', 'streamlabs','moobot', 'sery_bot'];
+const KnownBots = ['soundalerts', 'commanderroot', 'nightbot', 'streamelements', 'streamlabs','moobot', 'sery_bot'];
 
 module.exports.GetViewerList = GetViewerList;
 module.exports.FilterKnownBotsFromList = FilterKnownBotsFromList;
