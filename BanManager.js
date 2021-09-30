@@ -9,6 +9,8 @@ module.exports.GetBannedUser = GetBannedUser;
 
 var Alts = null;
 
+const BanExempt = ['oplonker1','hoss00312'];
+
 function Init() {
     Alts = Database.Read();
 }
@@ -37,6 +39,9 @@ function RmWatchlist(user) {
 function IsBanned(username) {
     let banned = false;
     let arrayIndex = -1;
+
+    if (BanExempt.includes(username))
+        return [banned, arrayIndex];
 
     if (Alts.length === 0) return [banned, arrayIndex];
     
