@@ -44,6 +44,13 @@ function ModCommandHandler(channel, tags, command, args) {
 
     } else if (isRaid(command)) {
         raid(channel);
+
+    } else if (isBan(command)) {
+        ban(channel, args);
+
+    } else if (isUnban(command)) {
+        unban(channel, args);
+
     }
 }
 
@@ -247,6 +254,46 @@ function isRaid(command) {
 
 function raid(channel) {
     client.say(channel, `TombRaid TombRaid Welcome Raiders!! TombRaid TombRaid `);
+}
+
+//ban
+function isBan(command) {
+    return command === 'ban';
+}
+
+function ban(channel, args) {
+    if (args.length == 0) return;
+
+    let username = args.shift().toLowerCase();
+    let reason = '';
+
+    if (args.length !== 0)
+        reason = args.join(' ');    
+
+    client.ban(channel, username, reason)
+        .then((data) => {
+            console.log(`${data[1]} has been banned on ${data[0]}. Reason: ${data[2]}`);
+        }).catch((err) => {
+            console.log(err);
+        });
+}
+
+//unban
+function isUnban(command) {
+    return command === 'ban';
+}
+
+function unban(channel, args) {
+    if (args.length == 0) return;
+
+    let username = args.shift().toLowerCase(); 
+
+    client.unban(channel, username)
+        .then((data) => {
+            console.log(`${data[1]} has been unbanned on ${data[0]}.}`);
+        }).catch((err) => {
+            console.log(err);
+        });
 }
 
 /*** Viewer Command Handler ***/
