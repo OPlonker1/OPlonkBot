@@ -98,6 +98,9 @@ function ViewerCommandHandler(channel, tags, command, args) {
     } else if (isHope(command)) {
         hope(channel);
 
+    } else if (isAlexa(command)) {
+        alexa(channel);
+
     }
 }
 
@@ -443,6 +446,14 @@ function hope(channel) {
     client.say(channel, `"A little hope, however desperate is never without worth." - Darkest Dungeon`);
 }
 
+//alexa
+function isAlexa(command) {
+    return command === 'alexa';
+}
+
+function alexa(channel) {
+    client.say(channel, `I wasn't talking to you!`);
+}
 
 /*** Message Handler ***/
 
