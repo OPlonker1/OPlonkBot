@@ -49,8 +49,11 @@ client.on('join', async (channel, username, self) => {
 
     let [isBanned, banIndex] = BanManager.IsBanned(username);
     if (isBanned) {
-        client.ban(channel, username);
-        client.whisper(`${process.env.TARGET_MOD}`, `${username} has been banned.`);
+        client.ban(channel, username).then((data) => {
+            console.log(`${data[1]} has been banned on ${data[0]}. Reason: ${data[2]}`);
+        }).catch((err) => {
+            console.log(err);
+        });
         return;
     }
 
@@ -65,7 +68,11 @@ client.on('join', async (channel, username, self) => {
     if (isBot) {
         client.say(channel, `${username} is a potential bot, in ${BotDetails[1]} channels`);
         if (BotDetails[1] > 100)
-            client.ban(channel, username, 'Accused of being a bot');
+            client.ban(channel, username, 'Accused of being a bot').then((data) => {
+            console.log(`${data[1]} has been banned on ${data[0]}. Reason: ${data[2]}`);
+        }).catch((err) => {
+            console.log(err);
+        });
     }
 });
 
