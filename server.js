@@ -34,6 +34,7 @@ let FoundBots = {};
 function Init(){
     BanManager.Init();
     Commands.Init(client);
+    BotFinder.UpdateBotList();
 
     client.connect();
 }

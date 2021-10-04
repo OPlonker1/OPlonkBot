@@ -6,34 +6,15 @@ let BotList = null;
 
 module.exports.GetBotList = GetBotList;
 module.exports.GetViewerBots = GetViewerBots;
+module.exports.UpdateBotList = UpdateBotList;
 
 async function GetBotList() {
     if (BotList !== null)
         return BotList;
     
-    let result = [];
-
-    try {
-        const response = await fetch('https://api.twitchinsights.net/v1/bots/all', {
-            method: 'get',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-        const dataJson = await response.json();
-        const bots = dataJson.bots;
-
-        bots.forEach( (bot) => {
-            if(!Viewers.Bots.includes(bot[0]))
-                result.push([bot[0], bot[1]]);
-        });
-
-    } catch(e) {
-        console.log('error', e);
-    }
+    BotList = await RequestBotList();
     
-    BotList = result;
-    return result;
+    return BotList;
 }
 
 async function GetViewerBots(channel) {
@@ -66,4 +47,35 @@ async function IsBot(username) {
     });
 
     return [found, foundBot];
+}
+
+let SixtyMinutes = 3600000;
+async function UpdateBotList() {
+    BotList = await RequestBotList();
+    setTimeout( UpdateBotList, SixtyMinutes);
+}
+
+async function RequestBotList() {
+    let result = [];
+
+    try {
+        const response = await fetch('https://api.twitchinsights.net/v1/bots/all', {
+            method: 'get',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        const dataJson = await response.json();
+        const bots = dataJson.bots;
+
+        bots.forEach( (bot) => {
+            if(!Viewers.Bots.includes(bot[0]))
+                result.push([bot[0], bot[1]]);
+        });
+
+    } catch(e) {
+        console.log('error', e);
+    }
+
+    return result;
 }
