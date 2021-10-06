@@ -90,7 +90,7 @@ client.on('message', (channel, tags, message, self) => {
 async function GreetingMessage(channel) {
     let Bots = await BotFinder.GetBotList();
 
-    client.action(channel, `v1.1.1 has started. Aware of ${Bots.length} bots currently.`);
+    client.action(channel, `v1.1.2 has started. Aware of ${Bots.length} bots currently.`);
 }
 
 async function BotCheck(channel) {
