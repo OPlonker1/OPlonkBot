@@ -11,13 +11,13 @@ module.exports.MessageHandler = MessageHandler;
 
 let client;
 
-function Init(_client){
+function Init(_client) {
     client = _client;
 }
 
 function CommandHandler(channel, tags, message) {
     let CMDstart = process.env.COMMAND_START;
-	const args = message.slice( CMDstart.length ).split(' ');
+    const args = message.slice(CMDstart.length).split(' ');
     const command = args.shift().toLowerCase();
 
     ModCommandHandler(channel, tags, command, args);
@@ -75,27 +75,31 @@ function ViewerCommandHandler(channel, tags, command, args) {
 
     } else if (isShoot(command)) {
         shoot(channel, tags.username, args);
+
     } else if (isCrossword(command)) {
         crossword(channel)
 
     } else if (isHydrate(command)) {
         hydrate(channel);
-        
+
     } else if (isBonk(command)) {
         bonk(channel, args);
-        
+
     } else if (isTunes(command)) {
         tunes(channel);
-        
+
+    } else if (isCatJams(command)) {
+        catJams(channel, args);
+
     } else if (isDriving(command)) {
         driving(channel);
-        
+
     } else if (isSteerAssist(command)) {
         steerAssist(channel);
-        
+
     } else if (isChildren(command)) {
         children(channel);
-        
+
     } else if (isDDReminder(command)) {
         ddReminder(channel);
 
@@ -107,6 +111,9 @@ function ViewerCommandHandler(channel, tags, command, args) {
 
     } else if (isAlexa(command)) {
         alexa(channel);
+
+    } else if (isMicDeath(command)) {
+        micDeath(channel);
 
     }
 }
@@ -164,7 +171,7 @@ function addBan(channel, args) {
         reason = args.join(' ');
     else
         reason = '';
-    
+
     let numAlts;
     if (args.length == 0) {
         numAlts = BanManager.AddToWatchlist(user, reason);
@@ -172,7 +179,7 @@ function addBan(channel, args) {
         let boolArg = args.shift().toLowerCase();
         numAlts = BanManager.AddToWatchlist(user, reason, boolArg === 'true');
     }
-    
+
     client.say(channel, `${user} has been added to the watchlist with ${numAlts} generated alt names.`);
 }
 
@@ -186,7 +193,7 @@ function rmBan(channel, args) {
 
     user = args.shift().toLowerCase();
     BanManager.RmWatchlist(user);
-    
+
     client.say(channel, `${user} has been removed from the watchlist`);
 }
 
@@ -209,7 +216,7 @@ function lsAlts(channel, args) {
 
         if (startIndex > 10)
             startIndex = 10;
-        
+
         if (startIndex > user.AccountAlts.length - 1)
             startIndex = user.AccountAlts.length - 1;
     }
@@ -225,7 +232,7 @@ function lsAlts(channel, args) {
     for (let index = startIndex; index < startIndex + numberToRetrieve; index++) {
         altList.push(user.AccountAlts[index]);
     }
-    
+
     client.say(channel, `${altList.join('\n')}`);
 }
 
@@ -268,7 +275,7 @@ function ban(channel, args) {
     let reason = '';
 
     if (args.length !== 0)
-        reason = args.join(' ');    
+        reason = args.join(' ');
 
     client.ban(channel, username, reason)
         .then((data) => {
@@ -286,7 +293,7 @@ function isUnban(command) {
 function unban(channel, args) {
     if (args.length == 0) return;
 
-    let username = args.shift().toLowerCase(); 
+    let username = args.shift().toLowerCase();
 
     client.unban(channel, username)
         .then((data) => {
@@ -374,7 +381,7 @@ async function shoot(channel, username, args) {
         selectedViewer = args.shift().toLowerCase();
         if (selectedViewer.charAt(0) === '@')
             selectedViewer = selectedViewer.slice(1, selectedViewer.length);
- 
+
     } else {
         let index = Math.floor(Math.random() * AllViewers.length);
         selectedViewer = AllViewers[index];
@@ -422,12 +429,12 @@ function bonk(channel, args) {
         let user = args.shift().toLowerCase();
         if (user.charAt(0) === '@')
             user = user.slice(1, user.length);
-        
+
         str += `@${user} `;
     }
-    
+
     str += 'Bonk, to jail with you! FootYellow StinkyCheese';
-    client.say(channel, str);  
+    client.say(channel, str);
 }
 
 //tunes
@@ -437,6 +444,28 @@ function isTunes(command) {
 
 function tunes(channel) {
     client.say(channel, `PepoDance blobDance pepeJAM catJAM`);
+}
+
+//catjams
+function isCatJams(command) {
+    return command === 'catjams';
+}
+
+function catJams(channel, args) {
+    let length = 4;
+
+    if (args.length !== 0 && isNaN(args[0]) == false)
+        length = args.shift();
+
+    if (length > 60)
+        length = 60;
+
+    let output = '';
+
+    for (let i = 0; i < length; i++)
+        output += 'catJAM ';
+
+    client.say(channel, output);
 }
 
 //driving
@@ -500,6 +529,15 @@ function isAlexa(command) {
 
 function alexa(channel) {
     client.say(channel, `I wasn't talking to you!`);
+}
+
+//micdeath
+function isMicDeath(command) {
+    return command === 'micdeath';
+}
+
+function micDeath(channel) {
+    client.say(channel, `Mic murder in progress!!`);
 }
 
 /*** Message Handler ***/
