@@ -3,11 +3,11 @@ const fs = require('fs');
 module.exports.Read = Read;
 module.exports.Write = Write;
 
-const fileName = 'NameAlts.json';
+const fileName = 'WatchList.json';
 
 function Read() {
     try {
-        const jsonAlts = fs.readFileSync(fileName);
+        const jsonAlts = fs.readFileSync(fileName, 'utf8');
         return JSON.parse(jsonAlts);
     } catch (err) {
         console.log(err);
@@ -16,7 +16,8 @@ function Read() {
 }
 
 function Write(data) {
-    fs.writeFileSync(fileName, JSON.stringify(data), err => {
+    let jsonData = JSON.stringify(data, null, 4);
+    fs.writeFileSync(fileName, jsonData, err => {
         if (err)
             console.log('Error writing file', err)
     });
