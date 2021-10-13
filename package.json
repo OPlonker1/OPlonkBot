@@ -9,8 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.23.0",
     "dotenv": "^10.0.0",
-    "node-fetch": "^2.6.5",
     "tmi.js": "^1.8.5"
   }
 }
