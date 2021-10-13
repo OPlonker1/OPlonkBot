@@ -5,7 +5,7 @@ const tmi = require('tmi.js');
 const BotFinder = require('./BotFinder');
 const BanManager = require('./BanManager');
 const Commands = require('./CommandFunctions');
-const { sleep } = require('./Utils');
+const { sleep } = require('./lib/Utils');
 
 const TARGET_CHANNELS = ['oplonker1', 'tornadopotato99', 'somegingergirl'];
 
@@ -22,7 +22,7 @@ const options = {
         password: process.env.TWITCH_PASSWORD
     },
 
-    channels: TARGET_CHANNELS    
+    channels: TARGET_CHANNELS
 };
 
 const client = new tmi.client(options);
@@ -31,7 +31,7 @@ const CMDstart = process.env.COMMAND_START;
 
 let FoundBots = {};
 
-function Init(){
+function Init() {
     BanManager.Init();
     Commands.Init(client);
     BotFinder.UpdateBotList();
@@ -71,10 +71,10 @@ client.on('join', async (channel, username, self) => {
 
         if (BotDetails[1] > 100)
             client.ban(channel, username, 'Accused of being a bot').then((data) => {
-            console.log(`${data[1]} has been banned on ${data[0]}. Reason: ${data[2]}`);
-        }).catch((err) => {
-            console.log(err);
-        });
+                console.log(`${data[1]} has been banned on ${data[0]}. Reason: ${data[2]}`);
+            }).catch((err) => {
+                console.log(err);
+            });
     }
 });
 
@@ -97,14 +97,14 @@ async function BotCheck(channel) {
     FoundBots[channel] = await BotFinder.GetViewerBots(channel.slice(1, channel.length));
 
     if (FoundBots[channel].length > 0) {
-            let botString = `${FoundBots[channel].length} possible bot(s) found in chat. `;
-            FoundBots[channel].forEach(bot => {
-                botString += `${bot[0]} : ${bot[1]} channels, `;
-            })
+        let botString = `${FoundBots[channel].length} possible bot(s) found in chat. `;
+        FoundBots[channel].forEach(bot => {
+            botString += `${bot[0]} : ${bot[1]} channels, `;
+        })
 
-            await sleep();
-            client.say(channel, botString);
-        }
+        await sleep();
+        client.say(channel, botString);
+    }
 }
 
 Init();
