@@ -2,9 +2,9 @@ require('dotenv').config();
 
 const tmi = require('tmi.js');
 
-const BotFinder = require('./BotFinder');
+const BotFinder = require('./bot/BotFinder');
 const BanManager = require('./BanManager');
-const Commands = require('./CommandFunctions');
+const Commands = require('./bot/CommandFunctions');
 const { sleep } = require('./lib/Utils');
 
 const TARGET_CHANNELS = ['oplonker1', 'tornadopotato99', 'somegingergirl'];

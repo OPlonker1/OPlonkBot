@@ -1,7 +1,7 @@
 require('dotenv').config();
 
-const BanManager = require('./BanManager');
-const Viewers = require('./GetViewerList');
+const BanManager = require('../BanManager');
+const Viewers = require('../GetViewerList');
 
 /*** Command Handlers ***/
 
