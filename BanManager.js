@@ -1,5 +1,5 @@
 const AltGenerator = require('./altGenerator');
-const Database = require('./DataManager');
+const Database = require('./data/DataManager');
 
 module.exports.Init = Init;
 module.exports.AddToWatchlist = AddToWatchlist;
@@ -9,7 +9,7 @@ module.exports.GetBannedUser = GetBannedUser;
 
 var Alts = null;
 
-const BanExempt = ['oplonker1','hoss00312'];
+const BanExempt = ['oplonker1', 'hoss00312'];
 
 function Init() {
     Alts = Database.Read();
@@ -17,9 +17,9 @@ function Init() {
 
 function AddToWatchlist(user, reason) {
     let alt;
-    
+
     alt = { BanReason: reason, AccountAlts: AltGenerator(user) };
-   
+
     Alts.push(alt);
 
     Database.Write(Alts);
@@ -29,7 +29,7 @@ function AddToWatchlist(user, reason) {
 
 function RmWatchlist(user) {
     let [isBan, index] = IsBanned(user);
-    
+
     if (!isBan) return;
     Alts.splice(index);
 
@@ -44,7 +44,7 @@ function IsBanned(username) {
         return [banned, arrayIndex];
 
     if (Alts.length === 0) return [banned, arrayIndex];
-    
+
     Alts.forEach(user => {
         user.AccountAlts.forEach(alt => {
             if (username.includes(alt)) {
