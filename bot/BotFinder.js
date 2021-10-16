@@ -1,6 +1,6 @@
-const fetch = require('node-fetch');
+const axios = require('axios');
 
-const Viewers = require('../GetViewerList');
+const Viewers = require('./GetViewerList');
 
 let BotList = null;
 
@@ -60,13 +60,8 @@ async function RequestBotList() {
     let result = [];
 
     try {
-        const response = await fetch('https://api.twitchinsights.net/v1/bots/all', {
-            method: 'get',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-        const dataJson = await response.json();
+        const response = await axios.get('https://api.twitchinsights.net/v1/bots/all');
+        const dataJson = await response.data;
         const bots = dataJson.bots;
 
         bots.forEach((bot) => {

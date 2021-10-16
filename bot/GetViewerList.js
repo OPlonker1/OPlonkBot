@@ -1,6 +1,6 @@
-const fetch = require('node-fetch');
+const axios = require('axios');
 
-const KnownBots = ['soundalerts', 'commanderroot', 'nightbot', 'streamelements', 'streamlabs','moobot', 'sery_bot'];
+const KnownBots = ['soundalerts', 'commanderroot', 'nightbot', 'streamelements', 'streamlabs', 'moobot', 'sery_bot'];
 
 module.exports.GetViewerList = GetViewerList;
 module.exports.FilterKnownBotsFromList = FilterKnownBotsFromList;
@@ -12,9 +12,9 @@ async function GetViewerList(channelName) {
     let data = null;
 
     try {
-        const response = await fetch(url);
-        data = await response.json();
-    } catch(e) {
+        const response = await axios.get(url);
+        data = response.data;
+    } catch (e) {
         console.log('error', e);
     }
 
