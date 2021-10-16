@@ -4,6 +4,7 @@ const KnownBots = ['soundalerts', 'commanderroot', 'nightbot', 'streamelements',
 
 module.exports.GetViewerList = GetViewerList;
 module.exports.FilterKnownBotsFromList = FilterKnownBotsFromList;
+module.exports.ExtractAllViewers = ExtractAllViewers;
 module.exports.Bots = KnownBots;
 
 
@@ -19,6 +20,13 @@ async function GetViewerList(channelName) {
     }
 
     return data;
+}
+
+function ExtractAllViewers(viewerList) {
+    const viewers = [...viewerList.broadcaster, ...viewerList.vips, ...viewerList.moderators,
+    ...viewerList.staff, ...viewerList.admins, ...viewerList.global_mods, ...viewerList.viewers];
+
+    return viewers;
 }
 
 function FilterKnownBotsFromList(viewers) {
