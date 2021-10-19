@@ -9,7 +9,7 @@ module.exports.GetBannedUser = GetBannedUser;
 
 var Alts = null;
 
-const BanExempt = ['oplonker1', 'hoss00312'];
+const BanExempt = ['oplonker1'];
 
 function Init() {
     Alts = Database.Read();
