@@ -3,11 +3,11 @@ require('dotenv').config();
 const tmi = require('tmi.js');
 
 const BotFinder = require('./bot/BotFinder');
-const BanManager = require('./BanManager');
+const BanManager = require('./bot/BanManager');
 const Commands = require('./bot/CommandFunctions');
 const { sleep } = require('./lib/Utils');
 
-const TARGET_CHANNELS = ['oplonker1', 'tornadopotato99', 'somegingergirl'];
+const TARGET_CHANNELS = ['oplonker1'];//, 'tornadopotato99', 'somegingergirl'];
 
 const options = {
     options: { debug: true },
@@ -90,7 +90,7 @@ client.on('message', (channel, tags, message, self) => {
 async function GreetingMessage(channel) {
     let Bots = await BotFinder.GetBotList();
 
-    client.action(channel, `v1.1.2 has started. Aware of ${Bots.length} bots currently.`);
+    client.action(channel, `v1.2.0 has started. Aware of ${Bots.length} bots currently.`);
 }
 
 async function BotCheck(channel) {
