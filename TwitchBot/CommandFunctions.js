@@ -1,4 +1,4 @@
-require('dotenv').config();
+const Config = require('../config');
 
 const BanManager = require('./BanManager');
 const Viewers = require('./GetViewerList');
@@ -16,7 +16,7 @@ function Init(_client) {
 }
 
 function CommandHandler(channel, tags, message) {
-    let CMDstart = process.env.COMMAND_START;
+    let CMDstart = Config.COMMAND_START;
     const args = message.slice(CMDstart.length).split(' ');
     const command = args.shift().toLowerCase();
 
