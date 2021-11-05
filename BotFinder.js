@@ -11,9 +11,9 @@ module.exports.UpdateBotList = UpdateBotList;
 async function GetBotList() {
     if (BotList !== null)
         return BotList;
-    
+
     BotList = await RequestBotList();
-    
+
     return BotList;
 }
 
@@ -22,15 +22,15 @@ async function GetViewerBots(channel) {
     let viewersList = await Viewers.GetViewerList(channel);
 
     let AllViewers = [...viewersList.chatters.moderators, ...viewersList.chatters.viewers, ...viewersList.chatters.broadcaster];
-    
+
     let botList = await GetBotList();
-    botList.forEach( bot => {
+    botList.forEach(bot => {
         AllViewers.forEach(User => {
             if (bot[0] === User)
                 FoundBots.push(bot);
         });
     });
-    
+
     return FoundBots;
 }
 
@@ -39,7 +39,7 @@ async function IsBot(username) {
     let found = false;
     let foundBot;
     let botList = await GetBotList();
-    botList.forEach( bot => {
+    botList.forEach(bot => {
         if (bot[0] === username) {
             found = true;
             foundBot = bot;
@@ -51,9 +51,16 @@ async function IsBot(username) {
 
 let SixtyMinutes = 3600000;
 async function UpdateBotList() {
-    console.log('\nBot List Updated\n');
-    BotList = await RequestBotList();
-    setTimeout( UpdateBotList, SixtyMinutes);
+
+    let bots = await RequestBotList();
+    if (bots.length > 0) {
+        BotList = bots;
+        console.log('\nBot List Updated\n');
+    } else {
+        console.log('\nError: Bot List Not Updated\n');
+    }
+
+    setTimeout(UpdateBotList, SixtyMinutes);
 }
 
 async function RequestBotList() {
@@ -69,12 +76,12 @@ async function RequestBotList() {
         const dataJson = await response.json();
         const bots = dataJson.bots;
 
-        bots.forEach( (bot) => {
-            if(!Viewers.Bots.includes(bot[0]))
+        bots.forEach((bot) => {
+            if (!Viewers.Bots.includes(bot[0]))
                 result.push([bot[0], bot[1]]);
         });
 
-    } catch(e) {
+    } catch (e) {
         console.log('error', e);
     }
 
