@@ -6,7 +6,7 @@ const BanManager = require('./BanManager');
 const Commands = require('./CommandFunctions');
 const { sleep } = require('../lib/Utils');
 
-const TARGET_CHANNELS = ['oplonker1'];//, 'tornadopotato99', 'somegingergirl'];
+const TARGET_CHANNELS = ['oplonker1', 'tornadopotato99', 'somegingergirl'];
 
 const options = {
     options: { debug: true },
@@ -105,7 +105,7 @@ function ChatFilter(channel, tags, message) {
     if (tags.mod === true || tags.badges["broadcaster"] !== undefined || tags.username === 'oplonker1' || tags.subscriber === true) return;
 
     if (CheckBigFollows(message)) {
-        client.timeout(channel, tags.username, 604800, 'Accused of being a BigFollows bot').then((data) => {
+        client.ban(channel, tags.username, 'BigFollows bot').then((data) => {
             console.log(`${data[1]} has been timed out on ${data[0]}. Reason: ${data[2]}`);
         }).catch((err) => {
             console.log(err);
