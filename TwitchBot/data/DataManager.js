@@ -3,7 +3,7 @@ const fs = require('fs');
 module.exports.Read = Read;
 module.exports.Write = Write;
 
-const currentDirectory = 'bot/data/';
+const currentDirectory = 'TwitchBot/data/';
 const fileName = 'WatchList.json';
 
 function Read() {
