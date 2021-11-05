@@ -127,6 +127,9 @@ function MessageHandler(channel, tags, message) {
     } else if (isChatBlind(message)) {
         chatBlind(channel);
 
+    } else if (isClueBlind(message)) {
+        clueBlind(channel);
+
     } else if (isAimAssist(message)) {
         aimAssist(channel);
 
@@ -141,6 +144,9 @@ function MessageHandler(channel, tags, message) {
 
     } else if (isBadaboom(message)) {
         badaboom(channel);
+
+    } else if (isTwss(message)) {
+        twss(channel);
 
     }
 }
@@ -560,6 +566,16 @@ function chatBlind(channel) {
     client.say(channel, `Chat blind confirmed! peepoLeave`);
 }
 
+//clueBlind
+function isClueBlind(message) {
+    return message.includes('clue blind?');
+}
+
+function clueBlind(channel) {
+    client.say(channel, `Clue blind confirmed! PunOko`);
+}
+
+
 //aimAssist
 function isAimAssist(message) {
     return message === 'aim assist';
@@ -604,4 +620,13 @@ function isBadaboom(message) {
 
 function badaboom(channel) {
     client.say(channel, `Big BadaBoom!!`);
+}
+
+//!twss
+function isTwss(message) {
+    return message === '!twss';
+}
+
+function twss(channel) {
+    client.say(channel, `That is definitely what she said! KEKW`);
 }
