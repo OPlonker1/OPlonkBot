@@ -51,8 +51,15 @@ async function IsBot(username) {
 
 let SixtyMinutes = 3600000;
 async function UpdateBotList() {
-    console.log('\nBot List Updated\n');
-    BotList = await RequestBotList();
+
+    let bots = await RequestBotList();
+    if (bots.length > 0) {
+        BotList = bots;
+        console.log('\nBot List Updated\n');
+    } else {
+        console.log('\nError: Bot List Not Updated\n');
+    }
+
     setTimeout(UpdateBotList, SixtyMinutes);
 }
 
