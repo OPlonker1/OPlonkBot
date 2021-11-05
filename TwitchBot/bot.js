@@ -26,8 +26,6 @@ const options = {
 
 const client = new tmi.client(options);
 
-const CMDstart = Config.COMMAND_START;
-
 let FoundBots = {};
 
 function Run() {
@@ -78,10 +76,7 @@ client.on('join', async (channel, username, self) => {
 client.on('message', (channel, tags, message, self) => {
     if (self) return;
 
-    if (message.startsWith(CMDstart))
-        Commands.CommandHandler(channel, tags, message);
-    else
-        Commands.MessageHandler(channel, tags, message);
+    Commands.ChatHandler(channel, tags, message);
 });
 
 async function GreetingMessage(channel) {
