@@ -76,6 +76,8 @@ client.on('join', async (channel, username, self) => {
 client.on('message', (channel, tags, message, self) => {
     if (self) return;
 
+    ChatFilter(channel, tags, message);
+
     Commands.ChatHandler(channel, tags, message);
 });
 
@@ -97,6 +99,35 @@ async function BotCheck(channel) {
         await sleep();
         client.say(channel, botString);
     }
+}
+
+function ChatFilter(channel, tags, message) {
+    if (tags.mod === true || tags.badges["broadcaster"] !== undefined || tags.username === 'oplonker1' || tags.subscriber === true) return;
+
+    if (CheckBigFollows(message)) {
+        client.timeout(channel, tags.username, 604800, 'Accused of being a BigFollows bot').then((data) => {
+            console.log(`${data[1]} has been timed out on ${data[0]}. Reason: ${data[2]}`);
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
+
+}
+
+function CheckBigFollows(message) {
+    message = message.toLowerCase();
+
+    let markers = ['become', 'famous', 'buy'];
+
+    let result = true;
+    markers.forEach(marker => {
+        if (!message.includes(marker))
+            result = false;
+    })
+
+    let RegExMarker = /\b(b *i *g *f *o *l *l *o *w *s *([\*\s\.\,]|\B) *c *o *m)+/g;
+
+    return RegExMarker.test(message) && result;
 }
 
 module.exports = Run;
