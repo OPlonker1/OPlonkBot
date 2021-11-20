@@ -102,11 +102,13 @@ async function BotCheck(channel) {
 }
 
 function ChatFilter(channel, tags, message) {
-    if (tags.mod === true || tags.badges["broadcaster"] !== undefined || tags.username === 'oplonker1' || tags.subscriber === true) return;
+    //console.log(tags);
+
+    if (tags.username === 'oplonker1' || (tags.mod === true || tags.subscriber === true) || (!(tags.badges === null) && tags.badges["broadcaster"] !== undefined)) return;
 
     if (CheckBigFollows(message)) {
         client.ban(channel, tags.username, 'BigFollows bot').then((data) => {
-            console.log(`${data[1]} has been timed out on ${data[0]}. Reason: ${data[2]}`);
+            console.log(`${data[1]} has been banned on ${data[0]}. Reason: ${data[2]}`);
         }).catch((err) => {
             console.log(err);
         });
