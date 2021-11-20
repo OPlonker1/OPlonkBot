@@ -112,6 +112,12 @@ function ChatFilter(channel, tags, message) {
         }).catch((err) => {
             console.log(err);
         });
+    } else if (CheckDogeHype(message)) {
+        client.ban(channel, tags.username, 'DogeHype bot').then((data) => {
+            console.log(`${data[1]} has been banned on ${data[0]}. Reason: ${data[2]}`);
+        }).catch((err) => {
+            console.log(err);
+        });
     }
 
 }
@@ -128,6 +134,22 @@ function CheckBigFollows(message) {
     })
 
     let RegExMarker = /\b(b *i *g *f *o *l *l *o *w *s *([\*\s\.\,]|\B) *c *o *m)+/g;
+
+    return RegExMarker.test(message) && result;
+}
+
+function CheckDogeHype(message) {
+    message = message.toLowerCase();
+
+    let markers = ['engage', 'community'];
+
+    let result = true;
+    markers.forEach(marker => {
+        if (!message.includes(marker))
+            result = false;
+    })
+
+    let RegExMarker = /\b(d *o *g *e *h *y *p *e *([\*\s\.\,]|\B) *c *o *m)+/g;
 
     return RegExMarker.test(message) && result;
 }
