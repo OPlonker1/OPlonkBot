@@ -134,8 +134,9 @@ function CheckBigFollows(message) {
     })
 
     let RegExMarker = /\b(b *i *g *f *o *l *l *o *w *s *([\*\s\.\,]|\B) *c *o *m)+/g;
+    let RegExBypassLinkMarker = /\b(c *l *c *k *([\*\s\.\,]|\B) *r *u)+/g;
 
-    return RegExMarker.test(message) && result;
+    return (RegExMarker.test(message) || RegExBypassLinkMarker.test(message)) && result;
 }
 
 function CheckDogeHype(message) {
