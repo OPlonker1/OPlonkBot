@@ -230,6 +230,7 @@ ViewerFunctions["hope"] = hope;
 ViewerFunctions["alexa"] = alexa;
 ViewerFunctions["micdeath"] = micDeath;
 ViewerFunctions["aimassist"] = aimAssist;
+ViewerFunctions["talking"] = talking;
 
 function OPlonkBot(channel) {
     client.say(channel, `I am a bot created by OPlonker1. I add some fun commands GlitchCat, I am also trying to fight the bad bots!! MrDestructoid `);
@@ -386,6 +387,10 @@ function micDeath(channel) {
 
 function aimAssist(channel) {
     client.say(channel, `My aim is usually better than this I swear, too much aim assist in this game! PepegaAim `);
+}
+
+function talking(channel, args) {
+    client.say(channel, 'Don\'t Talking Chat!!');
 }
 
 /*** Message Handler ***/
