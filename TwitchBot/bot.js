@@ -143,6 +143,8 @@ function CheckDogeHype(message) {
     message = message.toLowerCase();
 
     let markers = ['engage', 'community'];
+    let BypassMarkers = ['become', 'famous'];
+
 
     let result = true;
     markers.forEach(marker => {
@@ -150,9 +152,15 @@ function CheckDogeHype(message) {
             result = false;
     })
 
+    let BypassResult = true;
+    BypassMarkers.forEach(marker => {
+        if (!message.includes(marker))
+            BypassResult = false;
+    })
+
     let RegExMarker = /\b(d *o *g *e *h *y *p *e *([\*\s\.\,]|\B) *c *o *m)+/g;
 
-    return RegExMarker.test(message) && result;
+    return RegExMarker.test(message) && (result || BypassResult);
 }
 
 module.exports = Run;
