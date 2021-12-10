@@ -66,13 +66,15 @@ async function UpdateBotList() {
 async function RequestBotList() {
     let result = [];
 
+    let Exemptions = ['wombatcombatprime'];
+
     try {
         const response = await axios.get('https://api.twitchinsights.net/v1/bots/all');
         const dataJson = await response.data;
         const bots = dataJson.bots;
 
         bots.forEach((bot) => {
-            if (!Viewers.Bots.includes(bot[0]))
+            if (!Viewers.Bots.includes(bot[0]) && !(Exemptions.includes(bot[0])))
                 result.push([bot[0], bot[1]]);
         });
 
