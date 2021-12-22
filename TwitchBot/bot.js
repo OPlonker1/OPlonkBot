@@ -126,6 +126,8 @@ function CheckBigFollows(message) {
     message = message.toLowerCase();
 
     let markers = ['become', 'famous', 'buy'];
+    let BypassMarkers = ['Buy', 'follower', 'viewer'];
+    let BypassMarkers2 = ['Buy', 'follower', 'prime'];
 
     let result = true;
     markers.forEach(marker => {
@@ -133,10 +135,23 @@ function CheckBigFollows(message) {
             result = false;
     })
 
+    let BypassResult = true;
+    BypassMarkers.forEach(marker => {
+        if (!message.includes(marker))
+            BypassResult = false;
+    })
+
+    let BypassResult2 = true;
+    BypassMarkers2.forEach(marker => {
+        if (!message.includes(marker))
+            BypassResult2 = false;
+    })
+
     let RegExMarker = /\b(b *i *g *f *o *l *l *o *w *s *([\*\s\.\,]|\B) *c *o *m)+/g;
     let RegExBypassLinkMarker = /\b(c *l *c *k *([\*\s\.\,]|\B) *r *u)+/g;
+    let RegExBypassLinkMarker2 = /\b(v *k *([\*\s\.\,]|\B) *c *c)+/g
 
-    return (RegExMarker.test(message) || RegExBypassLinkMarker.test(message)) && result;
+    return (RegExMarker.test(message) || RegExBypassLinkMarker.test(message) || RegExBypassLinkMarker2.test(message)) && (result || BypassResult || BypassMarkers2);
 }
 
 function CheckDogeHype(message) {
