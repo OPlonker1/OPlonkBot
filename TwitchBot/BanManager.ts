@@ -1,21 +1,15 @@
-const AltGenerator = require('./altGenerator');
-const Database = require('./data/DataManager');
-
-module.exports.Init = Init;
-module.exports.AddToWatchlist = AddToWatchlist;
-module.exports.RmWatchlist = RmWatchlist;
-module.exports.IsBanned = IsBanned;
-module.exports.GetBannedUser = GetBannedUser;
+import AltGenerator from './altGenerator';
+import Database from './data/DataManager';
 
 var Alts = null;
 
 const BanExempt = ['oplonker1'];
 
-function Init() {
+export function Init() {
     Alts = Database.Read();
 }
 
-function AddToWatchlist(user, reason) {
+export function AddToWatchlist(user, reason) {
     let alt;
 
     alt = { BanReason: reason, AccountAlts: AltGenerator(user) };
@@ -27,7 +21,7 @@ function AddToWatchlist(user, reason) {
     return alt.AccountAlts.length - 1;
 }
 
-function RmWatchlist(user) {
+export function RmWatchlist(user) {
     let [isBan, index] = IsBanned(user);
 
     if (!isBan) return;
@@ -36,7 +30,7 @@ function RmWatchlist(user) {
     Database.Write(Alts);
 }
 
-function IsBanned(username) {
+export function IsBanned(username): [boolean, number] {
     let banned = false;
     let arrayIndex = -1;
 
@@ -57,9 +51,17 @@ function IsBanned(username) {
     return [banned, arrayIndex];
 }
 
-function GetBannedUser(username) {
+export function GetBannedUser(username) {
     let [isBanned, banIndex] = IsBanned(username);
     if (!isBanned) return null;
 
     return Alts[banIndex];
+}
+
+export default {
+    Init,
+    AddToWatchlist,
+    RmWatchlist,
+    IsBanned,
+    GetBannedUser
 }

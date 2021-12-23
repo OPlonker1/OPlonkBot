@@ -48,9 +48,7 @@ const varLeets = {
     '0': ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 };
 
-module.exports = CreateAlts;
-
-function CreateAlts(username) {
+export default function CreateAlts(username) {
     let alts;
     if (username.includes('[') || username.includes('(') || username.includes('{'))
         alts = varAltGenerator(username);
@@ -63,7 +61,7 @@ function CreateAlts(username) {
 function GenerateAlts(user) {
     let altNames;
 
-    splitUser = user.split('');
+    let splitUser = user.split('');
 
     var splitLeet = [];
     splitUser.forEach(letter => {
@@ -100,12 +98,12 @@ function varAltGenerator(username) {
     let altParts = [];
     for (let i = 0; i < altObjects.length; i++) {
         let temp;
-        object = altObjects[i];
+        let object = altObjects[i];
         
         if (object['type'] === types.constant)
             temp = object['word'];
         else if (object['type'] === types.regular)
-            temp = altGenerator.GenerateAlts(object['word']);
+            temp = GenerateAlts(object['word']);
         else if (object['type'] === types.variant)
             temp = varLeeter(object['word']);
 

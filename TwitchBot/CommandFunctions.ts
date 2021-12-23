@@ -1,12 +1,8 @@
-const Config = require('../config');
-
-const BanManager = require('./BanManager');
-const Viewers = require('./GetViewerList');
+import Config from '../config';
+import BanManager from './BanManager';
+import Viewers from './GetViewerList';
 
 /*** Command Handlers ***/
-
-module.exports.Init = Init;
-module.exports.ChatHandler = ChatHandler;
 
 let MessageFunctions = {};
 let ViewerFunctions = {};
@@ -98,20 +94,20 @@ function echo(channel, args) {
 function addBan(channel, args) {
     if (args.length == 0) return;
 
-    user = args.shift().toLowerCase();
+    let user = args.shift().toLowerCase();
     if (BanManager.IsBanned(user)[0]) return;
 
-    if (args.length != 0)
+    let reason = '';
+    if (args.length != 0) {
         reason = args.join(' ');
-    else
-        reason = '';
+    }
 
     let numAlts;
     if (args.length == 0) {
         numAlts = BanManager.AddToWatchlist(user, reason);
     } else {
         let boolArg = args.shift().toLowerCase();
-        numAlts = BanManager.AddToWatchlist(user, reason, boolArg === 'true');
+        numAlts = BanManager.AddToWatchlist(user, reason /*ToDo: not actually implemented, boolArg === 'true'*/);
     }
 
     client.say(channel, `${user} has been added to the watchlist with ${numAlts} generated alt names.`);
@@ -120,7 +116,7 @@ function addBan(channel, args) {
 function rmBan(channel, args) {
     if (args.length == 0) return;
 
-    user = args.shift().toLowerCase();
+    let user = args.shift().toLowerCase();
     BanManager.RmWatchlist(user);
 
     client.say(channel, `${user} has been removed from the watchlist`);
@@ -129,7 +125,7 @@ function rmBan(channel, args) {
 function lsAlts(channel, args) {
     if (args.length == 0) return;
 
-    username = args.shift().toLowerCase();
+    let username = args.shift().toLowerCase();
 
     let user = BanManager.GetBannedUser(username);
     if (user === null) return;
@@ -163,7 +159,7 @@ function lsAlts(channel, args) {
 function isBanned(channel, args) {
     if (args.length == 0) return;
 
-    username = args.shift().toLowerCase();
+    let username = args.shift().toLowerCase();
 
     let user = BanManager.GetBannedUser(username);
 
@@ -466,4 +462,9 @@ function isTwss(message) {
 
 function twss(channel) {
     client.say(channel, `That is definitely what she said! KEKW`);
+}
+
+export default {
+    Init,
+    ChatHandler
 }

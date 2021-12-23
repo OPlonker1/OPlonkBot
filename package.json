@@ -2,15 +2,24 @@
   "name": "oplonkbot",
   "version": "1.2.0",
   "description": "",
-  "main": "server.js",
+  "main": "./built/server.js",
   "scripts": {
-    "start": "node server.js"
+    "build": "tsc",
+    "start:prod": "node ./built/server.js",
+    "start:dev": "ts-node server.ts"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/tmi.js": "^1.8.1",
     "axios": "^0.23.0",
     "dotenv": "^10.0.0",
-    "tmi.js": "^1.8.5"
+    "tmi.js": "^1.8.5",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.4"
+  },
+  "devDependencies": {
+    "@cucumber/cucumber": "^8.0.0-rc.1",
+    "jest": "^27.4.5"
   }
 }

@@ -1,12 +1,6 @@
-const axios = require('axios');
+import axios from 'axios';
 
 const KnownBots = ['soundalerts', 'commanderroot', 'nightbot', 'streamelements', 'streamlabs', 'moobot', 'sery_bot'];
-
-module.exports.GetViewerList = GetViewerList;
-module.exports.FilterKnownBotsFromList = FilterKnownBotsFromList;
-module.exports.ExtractAllViewers = ExtractAllViewers;
-module.exports.Bots = KnownBots;
-
 
 async function GetViewerList(channelName) {
     let url = `https://tmi.twitch.tv/group/user/${channelName}/chatters`;
@@ -38,4 +32,11 @@ function FilterKnownBotsFromList(viewers) {
     })
 
     return filteredViewers;
+}
+
+export default {
+    GetViewerList,
+    FilterKnownBotsFromList,
+    ExtractAllViewers,
+    Bots: KnownBots
 }

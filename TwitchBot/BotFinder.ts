@@ -1,14 +1,9 @@
-const axios = require('axios');
-
-const Viewers = require('./GetViewerList');
+import axios from 'axios';
+import Viewers from './GetViewerList';
 
 let BotList = null;
 
-module.exports.GetBotList = GetBotList;
-module.exports.GetViewerBots = GetViewerBots;
-module.exports.UpdateBotList = UpdateBotList;
-
-async function GetBotList() {
+export async function GetBotList() {
     if (BotList !== null)
         return BotList;
 
@@ -17,7 +12,7 @@ async function GetBotList() {
     return BotList;
 }
 
-async function GetViewerBots(channel) {
+export async function GetViewerBots(channel) {
     let FoundBots = [];
     let viewersList = await Viewers.GetViewerList(channel);
 
@@ -34,8 +29,7 @@ async function GetViewerBots(channel) {
     return FoundBots;
 }
 
-module.exports.IsBot = IsBot;
-async function IsBot(username) {
+export async function IsBot(username) {
     let found = false;
     let foundBot;
     let botList = await GetBotList();
@@ -50,7 +44,7 @@ async function IsBot(username) {
 }
 
 let SixtyMinutes = 3600000;
-async function UpdateBotList() {
+export async function UpdateBotList() {
 
     let bots = await RequestBotList();
     if (bots.length > 0) {
@@ -63,14 +57,14 @@ async function UpdateBotList() {
     setTimeout(UpdateBotList, SixtyMinutes);
 }
 
-async function RequestBotList() {
+export async function RequestBotList() {
     let result = [];
 
     let Exemptions = ['wombatcombatprime'];
 
     try {
         const response = await axios.get('https://api.twitchinsights.net/v1/bots/all');
-        const dataJson = await response.data;
+        const dataJson: {bots: [string, string][]} = <any> await response.data;
         const bots = dataJson.bots;
 
         bots.forEach((bot) => {
@@ -84,3 +78,10 @@ async function RequestBotList() {
 
     return result;
 }
+
+export default {
+    GetBotList,
+    GetViewerBots,
+    UpdateBotList,
+    IsBot
+};

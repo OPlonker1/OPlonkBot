@@ -1,12 +1,13 @@
-const tmi = require('tmi.js');
+import tmi from 'tmi.js';
+import Config from '../config';
+import BotFinder from './BotFinder';
+import BanManager from './BanManager';
+import Commands from './CommandFunctions';
+import { sleep } from '../lib/Utils';
 
-const Config = require('../config');
-const BotFinder = require('./BotFinder');
-const BanManager = require('./BanManager');
-const Commands = require('./CommandFunctions');
-const { sleep } = require('../lib/Utils');
 
-const TARGET_CHANNELS = ['oplonker1', 'tornadopotato99', 'somegingergirl'];
+const TARGET_CHANNELS = ['amp180'];//, 'tornadopotato99', 'somegingergirl'];
+
 
 const options = {
     options: { debug: true },
@@ -24,6 +25,7 @@ const options = {
     channels: TARGET_CHANNELS
 };
 
+
 const client = new tmi.client(options);
 
 let FoundBots = {};
@@ -33,7 +35,8 @@ function Run() {
     Commands.Init(client);
     BotFinder.UpdateBotList();
 
-    client.connect();
+    client.connect()
+        .catch((err) => console.error(err));
 }
 
 client.on('join', async (channel, username, self) => {
