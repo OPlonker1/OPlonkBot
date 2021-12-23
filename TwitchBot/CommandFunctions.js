@@ -297,7 +297,7 @@ function crossword(channel) {
 }
 
 function hydrate(channel) {
-    client.say(channel, `Drink cactus juice!!\n It'll quench ya!!\n Nothing's quenchier!!\n It's the quenchiest!! HSCheers`);
+    client.say(channel, `Drink cactus juice!! It'll quench ya!! Nothing's quenchier!! It's the quenchiest!! HSCheers`);
 }
 
 function bonk(channel, args) {
