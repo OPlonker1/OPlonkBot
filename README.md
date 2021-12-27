@@ -55,6 +55,10 @@ Response: *"I am a bot created by OPlonker1. I add some fun commands GlitchCat, 
 Response: *"All the tentacles!!! Squid1 Squid2 Squid3 Squid2 Squid4"* <br>
 ##### crossword
 Response: *"Crossword is love, Crossword is life. duDudu <3 "* <br>
+##### commands
+Response: Provides a list of all commands available to viewers. <br>
+##### keywords
+Response: Provides a list of all key words that trigger a response from the bot. <br>
 ##### children
 Response: *"They're all mistakes, children. Filthy, nasty things. Glad I never was one." - Miss Trunchbull, Matilda"* <br>
 ##### nottoday
@@ -97,6 +101,8 @@ Response: *"@[ **Username** ] Bonk, to jail with you! FootYellow StinkyCheese"* 
 Optional: If there is no ***Username*** entered the *"@[**Username**]"* is excluded from the message. <br>
 ##### mic
 Response: *"Mic got tired. Have to wake it up. BOP"* <br>
+##### docs
+Response: Sends a link to this documentation into chat. <br>
 ### Message Replies List
 ##### chat blind?
 Trigger: Message contains trigger phrase. <br>

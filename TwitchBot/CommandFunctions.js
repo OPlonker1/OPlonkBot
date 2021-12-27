@@ -208,29 +208,32 @@ function unban(channel, args) {
 }
 
 /*** Viewer Command Handler ***/
+ViewerFunctions["commands"] = commands;
+ViewerFunctions["keywords"] = keyWords;
+ViewerFunctions["docs"] = docs;
+ViewerFunctions["steerassist"] = steerAssist;
+ViewerFunctions["ddreminder"] = ddReminder;
 ViewerFunctions["oplonkbot"] = OPlonkBot;
-ViewerFunctions["mic"] = mic;
-ViewerFunctions["internet"] = internet;
-ViewerFunctions["screen"] = screen;
 ViewerFunctions["tentacles"] = tentacles;
-ViewerFunctions["toxic"] = toxic;
-ViewerFunctions["shoot"] = shoot;
 ViewerFunctions["crossword"] = crossword;
+ViewerFunctions["aimassist"] = aimAssist;
+ViewerFunctions["internet"] = internet;
+ViewerFunctions["children"] = children;
+ViewerFunctions["nottoday"] = notToday;
+ViewerFunctions["micdeath"] = micDeath;
 ViewerFunctions["hydrate"] = hydrate;
-ViewerFunctions["bonk"] = bonk;
-ViewerFunctions["tunes"] = tunes;
 ViewerFunctions["catjams"] = catJams;
 ViewerFunctions["jammies"] = jammies;
 ViewerFunctions["driving"] = driving;
-ViewerFunctions["steerassist"] = steerAssist;
-ViewerFunctions["children"] = children;
-ViewerFunctions["ddreminder"] = ddReminder;
-ViewerFunctions["nottoday"] = notToday;
-ViewerFunctions["hope"] = hope;
-ViewerFunctions["alexa"] = alexa;
-ViewerFunctions["micdeath"] = micDeath;
-ViewerFunctions["aimassist"] = aimAssist;
 ViewerFunctions["talking"] = talking;
+ViewerFunctions["screen"] = screen;
+ViewerFunctions["alexa"] = alexa;
+ViewerFunctions["toxic"] = toxic;
+ViewerFunctions["shoot"] = shoot;
+ViewerFunctions["tunes"] = tunes;
+ViewerFunctions["bonk"] = bonk;
+ViewerFunctions["hope"] = hope;
+ViewerFunctions["mic"] = mic;
 
 function OPlonkBot(channel) {
     client.say(channel, `I am a bot created by OPlonker1. I add some fun commands GlitchCat, I am also trying to fight the bad bots!! MrDestructoid `);
@@ -389,8 +392,20 @@ function aimAssist(channel) {
     client.say(channel, `My aim is usually better than this I swear, too much aim assist in this game! PepegaAim `);
 }
 
-function talking(channel, args) {
+function talking(channel) {
     client.say(channel, 'Don\'t Talking Chat!!');
+}
+
+function commands(channel) {
+    client.say(channel, `Available commands: ${Object.keys(ViewerFunctions).join(', ')} .`);
+}
+
+function keyWords(channel) {
+    client.say(channel, 'Available Keywords: \'modcheck\', \'chat blind?\', \'clue blind?\', \'smort\', \'stronk\', \'rip\', \'badaboom?\', \'!twss\' ');
+}
+
+function docs(channel) {
+    client.say(channel, 'All the code and documentation can be found here: https://github.com/OPlonker1/OPlonkBot/tree/v1.2');
 }
 
 /*** Message Handler ***/
