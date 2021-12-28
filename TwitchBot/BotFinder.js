@@ -19,17 +19,22 @@ async function GetBotList() {
 
 async function GetViewerBots(channel) {
     let FoundBots = [];
-    let viewersList = await Viewers.GetViewerList(channel);
 
-    let AllViewers = [...viewersList.chatters.moderators, ...viewersList.chatters.viewers, ...viewersList.chatters.broadcaster];
+    try {
+        let viewersList = await Viewers.GetViewerList(channel);
 
-    let botList = await GetBotList();
-    botList.forEach(bot => {
-        AllViewers.forEach(User => {
-            if (bot[0] === User)
-                FoundBots.push(bot);
+        let AllViewers = [...viewersList.chatters.moderators, ...viewersList.chatters.viewers, ...viewersList.chatters.broadcaster];
+
+        let botList = await GetBotList();
+        botList.forEach(bot => {
+            AllViewers.forEach(User => {
+                if (bot[0] === User)
+                    FoundBots.push(bot);
+            });
         });
-    });
+    } catch (err) {
+        console.log(err);
+    }
 
     return FoundBots;
 }
