@@ -125,58 +125,71 @@ function ChatFilter(channel, tags, message) {
 function CheckBigFollows(message) {
     message = message.toLowerCase();
 
-    let markers = ['become', 'famous', 'buy'];
-    let BypassMarkers = ['Buy', 'follower', 'viewer'];
-    let BypassMarkers2 = ['Buy', 'follower', 'prime'];
+    let WordMarkers1 = ['become', 'famous', 'buy'];
+    let WordMarkers2 = ['Buy', 'follower', 'viewer'];
+    let WordMarkers3 = ['Buy', 'follower', 'prime'];
 
     let result = true;
-    markers.forEach(marker => {
+    WordMarkers1.forEach(marker => {
         if (!message.includes(marker))
             result = false;
     })
 
     let BypassResult = true;
-    BypassMarkers.forEach(marker => {
+    WordMarkers2.forEach(marker => {
         if (!message.includes(marker))
             BypassResult = false;
     })
 
     let BypassResult2 = true;
-    BypassMarkers2.forEach(marker => {
+    WordMarkers3.forEach(marker => {
         if (!message.includes(marker))
             BypassResult2 = false;
     })
 
-    let RegExMarker = /\b(b *i *g *f *o *l *l *o *w *s *([\*\s\.\,]|\B) *c *o *m)+/g;
-    let RegExBypassLinkMarker = /\b(c *l *c *k *([\*\s\.\,]|\B) *r *u)+/g;
-    let RegExBypassLinkMarker2 = /\b(v *k *([\*\s\.\,]|\B) *c *c)+/g;
-    let RegExBypassLinkMarker3 = /\b(c *u *t *t *([\*\s\.\,]|\B) *l *y)+/g;
-
-    return (RegExMarker.test(message) || RegExBypassLinkMarker.test(message) || RegExBypassLinkMarker2.test(message) || RegExBypassLinkMarker3.test(message)) && (result || BypassResult || BypassMarkers2);
+    return ContainsSpamLink(message) && (result || BypassResult || WordMarkers3);
 }
+
 
 function CheckDogeHype(message) {
     message = message.toLowerCase();
 
-    let markers = ['engage', 'community'];
-    let BypassMarkers = ['become', 'famous'];
+    let WordMarkers1 = ['engage', 'community'];
+    let WordMarkers2 = ['become', 'famous'];
 
 
     let result = true;
-    markers.forEach(marker => {
+    WordMarkers1.forEach(marker => {
         if (!message.includes(marker))
             result = false;
     })
 
     let BypassResult = true;
-    BypassMarkers.forEach(marker => {
+    WordMarkers2.forEach(marker => {
         if (!message.includes(marker))
             BypassResult = false;
     })
 
-    let RegExMarker = /\b(d *o *g *e *h *y *p *e *([\*\s\.\,]|\B) *c *o *m)+/g;
+    return ContainsSpamLink(message) && (result || BypassResult);
+}
 
-    return RegExMarker.test(message) && (result || BypassResult);
+function ContainsSpamLink(message) {
+
+    let RegExLinkMarker1 = /\b(b *i *g *f *o *l *l *o *w *s *([\*\s\.\,]|\B) *c *o *m)+/g;
+    let RegExLinkMarker2 = /\b(c *l *c *k *([\*\s\.\,]|\B) *r *u)+/g;
+    let RegExLinkMarker3 = /\b(v *k *([\*\s\.\,]|\B) *c *c)+/g;
+    let RegExLinkMarker4 = /\b(c *u *t *t *([\*\s\.\,]|\B) *l *y)+/g;
+    let RegExLinkMarker5 = /\b(b *i *t *([\*\s\.\,]|\B) *l *y)+/g;
+    let RegExLinkMarker6 = /\b(d *o *g *e *h *y *p *e *([\*\s\.\,]|\B) *c *o *m)+/g;
+
+    return (
+        RegExLinkMarker1.test(message) ||
+        RegExLinkMarker2.test(message) ||
+        RegExLinkMarker3.test(message) ||
+        RegExLinkMarker4.test(message) ||
+        RegExLinkMarker5.test(message) ||
+        RegExLinkMarker6.test(message)
+    );
 }
 
 module.exports = Run;
