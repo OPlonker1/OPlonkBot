@@ -21,7 +21,10 @@ async function GetViewerBots(channel) {
     let FoundBots = [];
 
     try {
-        let viewersList = await Viewers.GetViewerList(channel);
+        let viewersList = null;
+        while (viewersList === null) {
+            viewersList = await Viewers.GetViewerList(channel);
+        }
 
         let AllViewers = [...viewersList.chatters.moderators, ...viewersList.chatters.viewers, ...viewersList.chatters.broadcaster];
 
