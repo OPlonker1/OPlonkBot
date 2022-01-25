@@ -149,9 +149,10 @@ function CheckBigFollows(message) {
 
     let RegExMarker = /\b(b *i *g *f *o *l *l *o *w *s *([\*\s\.\,]|\B) *c *o *m)+/g;
     let RegExBypassLinkMarker = /\b(c *l *c *k *([\*\s\.\,]|\B) *r *u)+/g;
-    let RegExBypassLinkMarker2 = /\b(v *k *([\*\s\.\,]|\B) *c *c)+/g
+    let RegExBypassLinkMarker2 = /\b(v *k *([\*\s\.\,]|\B) *c *c)+/g;
+    let RegExBypassLinkMarker3 = /\b(c *u *t *t *([\*\s\.\,]|\B) *l *y)+/g;
 
-    return (RegExMarker.test(message) || RegExBypassLinkMarker.test(message) || RegExBypassLinkMarker2.test(message)) && (result || BypassResult || BypassMarkers2);
+    return (RegExMarker.test(message) || RegExBypassLinkMarker.test(message) || RegExBypassLinkMarker2.test(message) || RegExBypassLinkMarker3.test(message)) && (result || BypassResult || BypassMarkers2);
 }
 
 function CheckDogeHype(message) {
